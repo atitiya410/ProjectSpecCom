@@ -10,59 +10,9 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            // ************** CPU Name **************
-            Console.Write("Win32_Processor-Name : ");
-            getComponent("Win32_Processor", "Name");  // Intel(R) Core(TM) i3 - 3227U CPU @ 1.90GHz
-
-           //
-           // ******************************************************************
-           // ************** Generation **************
-            Console.Write("Generation : ");
-
-
-            //
-            // ******************************************************************
-            // ************** Speed **************
-            Console.Write("Win32_Processor-Speed : ");
-            getComponent("Win32_Processor", "CurrentClockSpeed");
-
-
-            //
-            // ******************************************************************
-            // ************** Memory slot **************
-            Console.Write("Win32_PhysicalMemory-Memory Slot : ");
-            getComponent("Win32_PhysicalMemory", "Capacity");
-
-            //
-            // ******************************************************************
-            // ************** MemoryType **************
-            Console.Write("Win32_PhysicalMemory-MemoryType : ");
-            getComponent("Win32_PhysicalMemory", "MemoryType");
-
-            //
-            // ******************************************************************
-            // **************  Current Memory GB **************
-            Console.Write("Win32_Processor-Name : ");
-
-
-            //
-            // ******************************************************************
-            // ************** HDD **************
-            Console.Write("Win32_DiskDrive-SizeHDD : ");
-            getComponent("Win32_DiskDrive", "Size"); //500GB
-
-            //
-            // ******************************************************************
-            // ************** Owner **************
-            Console.Write("Win32_Processor-SystemName : ");
-            getComponent("Win32_Processor","SystemName");
-
-            //
-            // ******************************************************************
-            // ************** Caption **************
-            Console.Write("Win32_VideoController-Caption : ");
-            getComponent("Win32_VideoController", "Caption");
-
+            getComponent();
+            getMemory();
+            getCaption();
 
 
 
@@ -70,20 +20,66 @@ namespace ConsoleApp1
             Console.ReadKey();
         }
 
-        private static void getComponent(string hwclass, string syntax)
+        private static void getComponent()
         {
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM " + hwclass);
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
 
-         
-
+      
             foreach (ManagementObject mj in mos.Get())
             {
-                Console.WriteLine(Convert.ToString(mj[syntax]));
-             
+                Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
 
             }
          
 
         }
+
+        private static void getMemory()
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
+
+            foreach (ManagementObject mj in mos.Get())
+            {
+               
+                Console.WriteLine("Capacity : " + Convert.ToUInt64(mj["Capacity"])/(1024*1024*1024) + " GB");
+                int memorytype = Convert.ToUInt16(mj["MemoryType"]);
+                if (memorytype == 20)
+                {
+                    Console.WriteLine("Memory Type : DDR ");
+                }
+                else if (memorytype == 21)
+                {
+                    Console.WriteLine("Memory Type : DDR2 ");
+                }
+                else if (memorytype == 22)
+                {
+                    Console.WriteLine("Memory Type : DDR2 FB-DIMM ");
+                }
+                else if (memorytype == 24)
+                {
+                    Console.WriteLine("Memory Type : DDR3 ");
+                }
+                else if (memorytype == 25)
+                {
+                    Console.WriteLine("Memory Type : FBD2 ");
+                }
+
+            }
+
+        }
+        private static void getCaption()
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
+
+            foreach (ManagementObject mj in mos.Get())
+            {
+               
+                Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
+            }
+        }
+
+     
+
+
     }
 }
