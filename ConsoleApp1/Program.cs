@@ -13,7 +13,7 @@ namespace ConsoleApp1
             getComponent();
             getMemory();
             getCaption();
-
+            getHDD();
 
 
 
@@ -28,7 +28,8 @@ namespace ConsoleApp1
             foreach (ManagementObject mj in mos.Get())
             {
                 Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
-
+                Console.WriteLine("Core : " + Convert.ToString(mj["NumberOfCores"]));
+                Console.WriteLine("Thread : " + Convert.ToString(mj["ThreadCount"]));
             }
          
 
@@ -78,7 +79,18 @@ namespace ConsoleApp1
             }
         }
 
-     
+        private static void getHDD()
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
+
+            foreach (ManagementObject mj in mos.Get())
+            {
+
+                Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
+            }
+        }
+
+
 
 
     }
