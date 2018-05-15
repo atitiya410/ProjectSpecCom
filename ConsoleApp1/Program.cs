@@ -10,80 +10,27 @@ namespace ConsoleApp1
     {
         static void Main(string[] args)
         {
-            // ************** CPU Name **************
-            Console.Write("Win32_Processor-Name : ");
-            getComponent("Win32_Processor", "Name");  // Intel(R) Core(TM) i3 - 3227U CPU @ 1.90GHz
-
-           //
-           // ******************************************************************
-           // ************** Generation **************
-            Console.Write("Generation : ");
-
-
-            //
-            // ******************************************************************
-            // ************** Speed **************
-            Console.Write("Win32_Processor-Speed : ");
-            getComponent("Win32_Processor", "CurrentClockSpeed");
-
-
-            //
-            // ******************************************************************
-            // ************** Memory slot **************
-            Console.Write("Win32_PhysicalMemory-Memory Slot : ");
-            getComponent("Win32_PhysicalMemory", "Capacity");
-
-            //
-            // ******************************************************************
-            // ************** MemoryType **************
-            Console.Write("Win32_PhysicalMemory-MemoryType : ");
-            getComponent("Win32_PhysicalMemory", "MemoryType");
-
-            //
-            // ******************************************************************
-            // **************  Current Memory GB **************
-            Console.Write("Win32_Processor-Name : ");
-
-
-            //
-            // ******************************************************************
-            // ************** HDD **************
-            Console.Write("Win32_DiskDrive-SizeHDD : ");
-            getComponent("Win32_DiskDrive", "Size"); //500GB
-
-            //
-            // ******************************************************************
-            // ************** Owner **************
-            Console.Write("Win32_Processor-SystemName : ");
-            getComponent("Win32_Processor","SystemName");
-
-            //
-            // ******************************************************************
-            // ************** Caption **************
-            Console.Write("Win32_VideoController-Caption : ");
-            getComponent("Win32_VideoController", "Caption");
-
-
-
-
-
-            Console.ReadKey();
+          
         }
 
-        private static void getComponent(string hwclass, string syntax)
+        private static void getCPU()
         {
-            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM " + hwclass);
-
-         
-
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
             foreach (ManagementObject mj in mos.Get())
             {
-                Console.WriteLine(Convert.ToString(mj[syntax]));
-             
-
+                Convert.ToString(mj["Name"]);
+                Convert.ToString(mj["MaxClockSpeed"]);
             }
-         
+        }
 
+        private static void getMemory()
+        {
+            ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+            foreach (ManagementObject mj in mos.Get())
+            {
+                Convert.ToString(mj["Name"]);
+                Convert.ToString(mj["MaxClockSpeed"]);
+            }
         }
     }
 }
