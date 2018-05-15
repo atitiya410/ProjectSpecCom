@@ -12,7 +12,7 @@ namespace ConsoleApp1
         {
             getComponent();
             getMemory();
-            getCaption();
+            getGraphicCard();
             getHDD();
 
 
@@ -30,6 +30,7 @@ namespace ConsoleApp1
                 Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
                 Console.WriteLine("Core : " + Convert.ToString(mj["NumberOfCores"]));
                 Console.WriteLine("Thread : " + Convert.ToString(mj["ThreadCount"]));
+                Console.WriteLine("Processorid : " + Convert.ToString(mj["Processorid"]));
             }
          
 
@@ -68,13 +69,13 @@ namespace ConsoleApp1
             }
 
         }
-        private static void getCaption()
+        private static void getGraphicCard()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
 
             foreach (ManagementObject mj in mos.Get())
             {
-               
+                Console.WriteLine("Graphic Card Name : " + Convert.ToString(mj["Caption"]));
                 Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
             }
         }
@@ -85,7 +86,7 @@ namespace ConsoleApp1
 
             foreach (ManagementObject mj in mos.Get())
             {
-
+                Console.WriteLine("DiskDrive Name : " + Convert.ToString(mj["Caption"]));
                 Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
             }
         }
