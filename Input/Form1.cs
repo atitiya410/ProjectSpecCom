@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConsoleApp1.Models;
+using Newtonsoft.Json;
 
 namespace Input
 {
@@ -43,8 +45,11 @@ namespace Input
                 MessageBox.Show("Success");
 
             }
-
-
+            User user = new User();
+            SendData sendData = new SendData();
+            user.UserName = textBox1.Text;
+            sendData.CreateUser(user);
+            MessageBox.Show("Success");
             this.Close();
         }
 
