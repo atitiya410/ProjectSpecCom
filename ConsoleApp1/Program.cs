@@ -91,6 +91,8 @@ namespace ConsoleApp1
             {
                 Console.WriteLine("Graphic Card Name : " + Convert.ToString(mj["Caption"]));
                 Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
+                graphicCard.Caption = Convert.ToString(mj["Caption"]);
+                graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
             }
         }
 
