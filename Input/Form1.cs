@@ -25,13 +25,14 @@ namespace Input
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
+     
          
             button1.Enabled = true;
         }
       
         private void button1_Click(object sender, EventArgs e)
         {
-            
+
             
             if (String.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text))
             {
@@ -41,13 +42,19 @@ namespace Input
             else
             {
                 MessageBox.Show("Success");
-
+                
             }
 
 
             this.Close();
         }
 
-        
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(this, new EventArgs());
+            }
+        }
     }
 }
