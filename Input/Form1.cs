@@ -30,7 +30,15 @@ namespace Input
   
             button1.Enabled = true;
         }
-      
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(this, new EventArgs());
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
             
