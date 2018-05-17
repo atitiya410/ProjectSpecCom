@@ -4,6 +4,7 @@ using System.ComponentModel;
 using System.Data;
 using System.Drawing;
 using System.Linq;
+using System.Net.Http;
 using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
@@ -31,7 +32,7 @@ namespace Input
             button1.Enabled = true;
         }
       
-        private void button1_Click(object sender, EventArgs e)
+        private async void button1_Click(object sender, EventArgs e)
         {
             
             
@@ -48,15 +49,16 @@ namespace Input
             User user = new User();
             SendData sendData = new SendData();
             user.UserName = textBox1.Text;
-            sendData.CreateUser(user);
+            await sendData.CreateUser(user);
+
             GetData getData = new GetData();
-            getData.getComputer();
-            getData.getMemory();
-            getData.getGraphicCard();
-            getData.getHDD();
+            await getData.getComputer();
+            await getData.getMemory();
+            await getData.getGraphicCard();
+            await getData.getHDD();
             ComputerUser computerUser = new ComputerUser();
-            sendData.CreateComUser(computerUser);
-            MessageBox.Show("Success");
+            await sendData.CreateComUser(computerUser);
+
             this.Close();
         }
 

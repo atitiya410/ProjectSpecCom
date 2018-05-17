@@ -1,4 +1,6 @@
-﻿namespace Input
+﻿using System.Threading.Tasks;
+
+namespace Input
 {
     partial class Input
     {

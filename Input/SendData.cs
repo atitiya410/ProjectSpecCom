@@ -12,64 +12,64 @@ namespace Input
 {
     class SendData
     {
-        public void CreateUser(User user)
+        public async Task CreateUser(User user)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.PostAsJsonAsync("api/Users", user);
+            var response = await client.PostAsJsonAsync("api/Users", user);
         }
 
-        public void CreateComputer(Computer computer)
+        public async Task CreateComputer(Computer computer)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
    
-            var response = client.PostAsJsonAsync("api/Computers", computer);
+            var response =await client.PostAsJsonAsync("api/Computers", computer);
         }
 
-        public void CreateMemory(Memory memory)
+        public async Task CreateMemory(Memory memory)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.PostAsJsonAsync("api/Memories", memory);
+            var response = await client.PostAsJsonAsync("api/Memories", memory);
         }
 
-        public void CreateGraphicCard(GraphicCard graphic)
+        public async Task CreateGraphicCard(GraphicCard graphic)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.PostAsJsonAsync("api/GraphicCards", graphic);
+            var response = await client.PostAsJsonAsync("api/GraphicCards", graphic);
         }
 
-        public void CreateHDD(DiskDrive diskDrive)
+        public async Task CreateHDD(DiskDrive diskDrive)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.PostAsJsonAsync("api/DiskDrives", diskDrive);
+            var response = await client.PostAsJsonAsync("api/DiskDrives", diskDrive);
         }
 
-        public void CreateComUser(ComputerUser computerUser)
+        public async Task CreateComUser(ComputerUser computerUser)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri("http://localhost:57224/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = client.PostAsJsonAsync("api/ComputerUsers", computerUser);
+            var response = await client.PostAsJsonAsync("api/ComputerUsers", computerUser);
         }
     }
 }

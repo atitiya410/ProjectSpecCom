@@ -84,16 +84,27 @@ namespace WebapiSpeccom.Controllers
         // POST: api/Users
         [HttpPost]
         public async Task<IActionResult> PostUser([FromBody] User user)
-        {
+        {   
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
+            var username = await _context.User.SingleOrDefaultAsync(a => a.UserName == user.UserName);
+            if (username == null)
+            {
+                _context.User.Add(user);
+                await _context.SaveChangesAsync();
+               
+            }
+            else
+            {
+                return Ok("Update New User");
+            }
 
-            _context.User.Add(user);
-            await _context.SaveChangesAsync();
 
-            return CreatedAtAction("GetUser", new { id = user.UserId }, user);
+
+            return Ok("Create New User");
         }
 
         // DELETE: api/Users/5
