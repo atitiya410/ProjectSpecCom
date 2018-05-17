@@ -3,7 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-
+using System.Management;
+using ConsoleApp1.Models;
 namespace Input
 {
     static class Program
@@ -18,5 +19,9 @@ namespace Input
             Application.SetCompatibleTextRenderingDefault(false);
             Application.Run(new Input());
         }
+
+        
+
+
     }
 }

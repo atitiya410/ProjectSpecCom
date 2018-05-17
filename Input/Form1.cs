@@ -8,6 +8,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
+using ConsoleApp1.Models;
+using Newtonsoft.Json;
 
 namespace Input
 {
@@ -16,7 +18,7 @@ namespace Input
         public Input()
         {
             InitializeComponent();
-        }
+        }  
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -29,7 +31,15 @@ namespace Input
          
             button1.Enabled = true;
         }
-      
+
+        private void textBox1_KeyDown(object sender, KeyEventArgs e)
+        {
+            if (e.KeyCode == Keys.Enter)
+            {
+                button1_Click(this, new EventArgs());
+            }
+        }
+
         private void button1_Click(object sender, EventArgs e)
         {
 
@@ -44,8 +54,18 @@ namespace Input
                 MessageBox.Show("Success");
                 
             }
-
-
+            User user = new User();
+            SendData sendData = new SendData();
+            user.UserName = textBox1.Text;
+            sendData.CreateUser(user);
+            GetData getData = new GetData();
+            getData.getComputer();
+            getData.getMemory();
+            getData.getGraphicCard();
+            getData.getHDD();
+            ComputerUser computerUser = new ComputerUser();
+            sendData.CreateComUser(computerUser);
+            MessageBox.Show("Success");
             this.Close();
         }
 
