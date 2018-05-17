@@ -15,7 +15,7 @@ namespace Input
         public async Task CreateUser(User user)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -25,7 +25,7 @@ namespace Input
         public async Task CreateComputer(Computer computer)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
    
@@ -35,7 +35,7 @@ namespace Input
         public async Task CreateMemory(Memory memory)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -45,7 +45,7 @@ namespace Input
         public async Task CreateGraphicCard(GraphicCard graphic)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -55,7 +55,7 @@ namespace Input
         public async Task CreateHDD(DiskDrive diskDrive)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -65,7 +65,7 @@ namespace Input
         public async Task CreateComUser(ComputerUser computerUser)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("http://localhost:57224/");
+            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
