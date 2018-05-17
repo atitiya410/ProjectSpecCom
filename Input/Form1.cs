@@ -34,6 +34,7 @@ namespace Input
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
         {
+            
             if (e.KeyCode == Keys.Enter)
             {
                 button1_Click(this, new EventArgs());
@@ -69,12 +70,6 @@ namespace Input
             this.Close();
         }
 
-        private void textBox1_KeyDown(object sender, KeyEventArgs e)
-        {
-            if (e.KeyCode == Keys.Enter)
-            {
-                button1_Click(this, new EventArgs());
-            }
-        }
+       
     }
 }
