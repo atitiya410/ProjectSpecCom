@@ -37,13 +37,14 @@ namespace WebapiSpeccom.Controllers
             }
 
             var computer = await _context.Computer.SingleOrDefaultAsync(m => m.Cpuid == id);
+            var comid = _context.Computer.Max(s => s.Cpuid);
 
             if (computer == null)
             {
                 return NotFound();
             }
 
-            return Ok(computer);
+            return Ok(comid);
         }
 
         // PUT: api/Computers/5

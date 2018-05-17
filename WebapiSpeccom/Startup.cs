@@ -38,7 +38,8 @@ namespace WebapiSpeccom
             {
                 app.UseDeveloperExceptionPage();
             }
-
+            app.UseCors(builder =>
+            builder.WithOrigins("*").AllowAnyHeader());
 
             app.UseMvc();
         }

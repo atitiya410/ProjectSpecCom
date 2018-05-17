@@ -85,11 +85,13 @@ namespace WebapiSpeccom.Controllers
         [HttpPost]
         public async Task<IActionResult> PostDiskDrive([FromBody] DiskDrive diskDrive)
         {
+            var comid = _context.Computer.Max(s => s.Cpuid);
+            diskDrive.Cpuid = comid;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+           
             _context.DiskDrive.Add(diskDrive);
             await _context.SaveChangesAsync();
 

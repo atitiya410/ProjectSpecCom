@@ -85,11 +85,13 @@ namespace WebapiSpeccom.Controllers
         [HttpPost]
         public async Task<IActionResult> PostGraphicCard([FromBody] GraphicCard graphicCard)
         {
+            var comid = _context.Computer.Max(s => s.Cpuid);
+            graphicCard.Cpuid = comid;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+            
             _context.GraphicCard.Add(graphicCard);
             await _context.SaveChangesAsync();
 

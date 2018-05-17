@@ -85,11 +85,13 @@ namespace WebapiSpeccom.Controllers
         [HttpPost]
         public async Task<IActionResult> PostMemory([FromBody] Memory memory)
         {
+            var comid = _context.Computer.Max(s => s.Cpuid);
+            memory.Cpuid = comid;
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+           
             _context.Memory.Add(memory);
             await _context.SaveChangesAsync();
 

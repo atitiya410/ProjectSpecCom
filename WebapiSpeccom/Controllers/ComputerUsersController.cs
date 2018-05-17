@@ -85,11 +85,15 @@ namespace WebapiSpeccom.Controllers
         [HttpPost]
         public async Task<IActionResult> PostComputerUser([FromBody] ComputerUser computerUser)
         {
+            var comid = _context.Computer.Max(s => s.Cpuid);
+            var userid = _context.User.Max(m => m.UserId);
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-
+           
+            computerUser.UserId = userid;
+            computerUser.Cpuid = comid;
             _context.ComputerUser.Add(computerUser);
             try
             {

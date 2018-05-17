@@ -13,8 +13,6 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "WebapiSpeccom", "WebapiSpec
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "Input", "Input\Input.csproj", "{0DD7045E-4E80-4237-A6ED-247FF5032101}"
 EndProject
-Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "InputSetup", "InputSetup\InputSetup.vdproj", "{C7C5CC02-AA6E-45D4-958D-4F40F218C689}"
-EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -33,8 +31,6 @@ Global
 		{0DD7045E-4E80-4237-A6ED-247FF5032101}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{0DD7045E-4E80-4237-A6ED-247FF5032101}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{0DD7045E-4E80-4237-A6ED-247FF5032101}.Release|Any CPU.Build.0 = Release|Any CPU
-		{C7C5CC02-AA6E-45D4-958D-4F40F218C689}.Debug|Any CPU.ActiveCfg = Debug
-		{C7C5CC02-AA6E-45D4-958D-4F40F218C689}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

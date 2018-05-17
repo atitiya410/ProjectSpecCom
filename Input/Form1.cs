@@ -49,6 +49,13 @@ namespace Input
             SendData sendData = new SendData();
             user.UserName = textBox1.Text;
             sendData.CreateUser(user);
+            GetData getData = new GetData();
+            getData.getComputer();
+            getData.getMemory();
+            getData.getGraphicCard();
+            getData.getHDD();
+            ComputerUser computerUser = new ComputerUser();
+            sendData.CreateComUser(computerUser);
             MessageBox.Show("Success");
             this.Close();
         }
