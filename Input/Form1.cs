@@ -18,7 +18,7 @@ namespace Input
         public Input()
         {
             InitializeComponent();
-        }
+        }  
 
         private void Form1_Load(object sender, EventArgs e)
         {
@@ -27,14 +27,15 @@ namespace Input
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-         
+  
             button1.Enabled = true;
         }
       
         private void button1_Click(object sender, EventArgs e)
         {
             
-            
+
+
             if (String.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 MessageBox.Show("Please enter your name!!!");
