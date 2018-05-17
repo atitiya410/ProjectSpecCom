@@ -90,6 +90,7 @@ namespace WebapiSpeccom.Controllers
             {
                 return BadRequest(ModelState);
             }
+            var processorId = await _context.Computer.SingleOrDefaultAsync(m => m.ProcessorId == computer.ProcessorId);
 
             _context.Computer.Add(computer);
             await _context.SaveChangesAsync();

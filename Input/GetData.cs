@@ -10,7 +10,7 @@ namespace Input
 {
     public class GetData
     {
-        public void getComputer()
+        public async Task getComputer()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
            
@@ -26,13 +26,14 @@ namespace Input
                 computer.Cores = Convert.ToInt32(mj["NumberOfCores"]);
                 computer.Thread = Convert.ToInt32(mj["ThreadCount"]);
                 computer.ProcessorId = Convert.ToString(mj["Processorid"]);
-                sendData.CreateComputer(computer);
+                await sendData.CreateComputer(computer);
+                
             }
 
 
         }
 
-        public void getMemory()
+        public async Task getMemory()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
             SendData sendData = new SendData();
@@ -69,11 +70,11 @@ namespace Input
                 }
                 memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024));
                 memory.MemoryType = memoryt;
-                sendData.CreateMemory(memory);
+                await sendData.CreateMemory(memory);
             }
 
         }
-        public void getGraphicCard()
+        public async Task getGraphicCard()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
             
@@ -85,11 +86,11 @@ namespace Input
                 Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
                 graphicCard.Caption = Convert.ToString(mj["Caption"]);
                 graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
-                sendData.CreateGraphicCard(graphicCard);
+                await sendData.CreateGraphicCard(graphicCard);
             }
         }
 
-        public void getHDD()
+        public async Task getHDD()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
            
@@ -101,7 +102,7 @@ namespace Input
                 //Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
                 diskDrive.Caption = Convert.ToString(mj["Caption"]);
                 diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1024) / 1024) / 1024);
-                sendData.CreateHDD(diskDrive);
+                await sendData.CreateHDD(diskDrive);
             }
         }
 
