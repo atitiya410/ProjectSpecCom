@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpeccomInterface;
 using WebapiSpeccom.Models;
 
 namespace WebapiSpeccom.Controllers
@@ -13,30 +14,30 @@ namespace WebapiSpeccom.Controllers
     [Route("api/ComputerUsers")]
     public class ComputerUsersController : Controller
     {
-        private readonly speccomContext _context;
+        private readonly IComputerUser icomputerUser;
 
-        public ComputerUsersController(speccomContext context)
+        public ComputerUsersController(IComputerUser context)
         {
-            _context = context;
+            icomputerUser = context;
         }
 
         // GET: api/ComputerUsers
         [HttpGet]
         public IEnumerable<ComputerUser> GetComputerUser()
         {
-            return _context.ComputerUser;
+            return icomputerUser.GetComputerUser();
         }
 
         // GET: api/ComputerUsers/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetComputerUser([FromRoute] int id)
+        public IActionResult GetComputerUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var computerUser = await _context.ComputerUser.SingleOrDefaultAsync(m => m.UserId == id);
+            var computerUser = icomputerUser.GetCompuerUserByID(id);
 
             if (computerUser == null)
             {
@@ -48,7 +49,7 @@ namespace WebapiSpeccom.Controllers
 
         // PUT: api/ComputerUsers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComputerUser([FromRoute] int id, [FromBody] ComputerUser computerUser)
+        public IActionResult PutComputerUser([FromRoute] int id, [FromBody] ComputerUser computerUser)
         {
             if (!ModelState.IsValid)
             {
@@ -60,84 +61,50 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(computerUser).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ComputerUserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            icomputerUser.PutComputerUser(id, computerUser);
 
             return NoContent();
         }
 
         // POST: api/ComputerUsers
         [HttpPost]
-        public async Task<IActionResult> PostComputerUser([FromBody] ComputerUser computerUser)
+        public IActionResult PostComputerUser([FromBody] ComputerUser computerUser)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
-            var userid = _context.User.Max(m => m.UserId);
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-           
-            computerUser.UserId = userid;
-            computerUser.Cpuid = comid;
-            _context.ComputerUser.Add(computerUser);
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateException)
-            {
-                if (ComputerUserExists(computerUser.UserId))
-                {
-                    return new StatusCodeResult(StatusCodes.Status409Conflict);
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
+            icomputerUser.AddComputerUser(computerUser);
 
             return CreatedAtAction("GetComputerUser", new { id = computerUser.UserId }, computerUser);
         }
 
         // DELETE: api/ComputerUsers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComputerUser([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteComputerUser([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var computerUser = await _context.ComputerUser.SingleOrDefaultAsync(m => m.UserId == id);
-            if (computerUser == null)
-            {
-                return NotFound();
-            }
+        //    var computerUser = await _context.ComputerUser.SingleOrDefaultAsync(m => m.UserId == id);
+        //    if (computerUser == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.ComputerUser.Remove(computerUser);
-            await _context.SaveChangesAsync();
+        //    _context.ComputerUser.Remove(computerUser);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(computerUser);
-        }
+        //    return Ok(computerUser);
+        //}
 
-        private bool ComputerUserExists(int id)
-        {
-            return _context.ComputerUser.Any(e => e.UserId == id);
-        }
+        //private bool ComputerUserExists(int id)
+        //{
+        //    return _context.ComputerUser.Any(e => e.UserId == id);
+        //}
     }
 }

@@ -22,6 +22,7 @@
 
   <ItemGroup>
     <ProjectReference Include="..\SpeccomDB\SpeccomDB.csproj" />
+    <ProjectReference Include="..\SpeccomInterface\SpeccomInterface.csproj" />
   </ItemGroup>
 
 </Project>

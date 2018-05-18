@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpeccomInterface;
 using WebapiSpeccom.Models;
 
 namespace WebapiSpeccom.Controllers
@@ -13,30 +14,30 @@ namespace WebapiSpeccom.Controllers
     [Route("api/GraphicCards")]
     public class GraphicCardsController : Controller
     {
-        private readonly speccomContext _context;
+        private readonly IGraphicCards igraphicCards;
 
-        public GraphicCardsController(speccomContext context)
+        public GraphicCardsController(IGraphicCards context)
         {
-            _context = context;
+            igraphicCards = context;
         }
 
         // GET: api/GraphicCards
         [HttpGet]
         public IEnumerable<GraphicCard> GetGraphicCard()
         {
-            return _context.GraphicCard;
+            return igraphicCards.GetAllGraphicCard();
         }
 
         // GET: api/GraphicCards/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetGraphicCard([FromRoute] int id)
+        public IActionResult GetGraphicCard([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var graphicCard = await _context.GraphicCard.SingleOrDefaultAsync(m => m.GraphicCardId == id);
+            var graphicCard = igraphicCards.GetGraphicCardByID(id);
 
             if (graphicCard == null)
             {
@@ -48,7 +49,7 @@ namespace WebapiSpeccom.Controllers
 
         // PUT: api/GraphicCards/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutGraphicCard([FromRoute] int id, [FromBody] GraphicCard graphicCard)
+        public IActionResult PutGraphicCard([FromRoute] int id, [FromBody] GraphicCard graphicCard)
         {
             if (!ModelState.IsValid)
             {
@@ -60,68 +61,45 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(graphicCard).State = EntityState.Modified;
+            igraphicCards.PutGraphicCard(id, graphicCard);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!GraphicCardExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return NoContent();
         }
 
         // POST: api/GraphicCards
         [HttpPost]
-        public async Task<IActionResult> PostGraphicCard([FromBody] GraphicCard graphicCard)
+        public IActionResult PostGraphicCard([FromBody] GraphicCard graphicCard)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
-            graphicCard.Cpuid = comid;
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            
-            _context.GraphicCard.Add(graphicCard);
-            await _context.SaveChangesAsync();
+            igraphicCards.AddGraphicCard(graphicCard);
 
             return CreatedAtAction("GetGraphicCard", new { id = graphicCard.GraphicCardId }, graphicCard);
         }
 
         // DELETE: api/GraphicCards/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteGraphicCard([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteGraphicCard([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var graphicCard = await _context.GraphicCard.SingleOrDefaultAsync(m => m.GraphicCardId == id);
-            if (graphicCard == null)
-            {
-                return NotFound();
-            }
+        //    var graphicCard = await _context.GraphicCard.SingleOrDefaultAsync(m => m.GraphicCardId == id);
+        //    if (graphicCard == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.GraphicCard.Remove(graphicCard);
-            await _context.SaveChangesAsync();
+        //    _context.GraphicCard.Remove(graphicCard);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(graphicCard);
-        }
+        //    return Ok(graphicCard);
+        //}
 
-        private bool GraphicCardExists(int id)
-        {
-            return _context.GraphicCard.Any(e => e.GraphicCardId == id);
-        }
+        //private bool GraphicCardExists(int id)
+        //{
+        //    return _context.GraphicCard.Any(e => e.GraphicCardId == id);
+        //}
     }
 }

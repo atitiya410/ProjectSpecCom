@@ -5,6 +5,7 @@ using System.Threading.Tasks;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
+using SpeccomInterface;
 using WebapiSpeccom.Models;
 
 namespace WebapiSpeccom.Controllers
@@ -13,43 +14,43 @@ namespace WebapiSpeccom.Controllers
     [Route("api/Computers")]
     public class ComputersController : Controller
     {
-        private readonly speccomContext _context;
+        private readonly IComputer icomputer;
 
-        public ComputersController(speccomContext context)
+        public ComputersController(IComputer context)
         {
-            _context = context;
+            icomputer = context;
         }
 
         // GET: api/Computers
         [HttpGet]
         public IEnumerable<Computer> GetComputer()
         {
-            return _context.Computer;
+            return icomputer.GetAllComputers();
         }
 
         // GET: api/Computers/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetComputer([FromRoute] int id)
+        public IActionResult GetComputer([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var computer = await _context.Computer.SingleOrDefaultAsync(m => m.Cpuid == id);
-            var comid = _context.Computer.Max(s => s.Cpuid);
+            var computerid = icomputer.GetComputerByID(id);
+           
 
-            if (computer == null)
+            if (computerid == null)
             {
                 return NotFound();
             }
 
-            return Ok(comid);
+            return Ok(computerid);
         }
 
         // PUT: api/Computers/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutComputer([FromRoute] int id, [FromBody] Computer computer)
+        public  IActionResult PutComputer([FromRoute] int id, [FromBody] Computer computer)
         {
             if (!ModelState.IsValid)
             {
@@ -61,67 +62,48 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(computer).State = EntityState.Modified;
-
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!ComputerExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+            icomputer.PutComputer(id,computer);
 
             return NoContent();
         }
 
         // POST: api/Computers
         [HttpPost]
-        public async Task<IActionResult> PostComputer([FromBody] Computer computer)
+        public IActionResult PostComputer([FromBody] Computer computer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            var processorId = await _context.Computer.SingleOrDefaultAsync(m => m.ProcessorId == computer.ProcessorId);
-
-            _context.Computer.Add(computer);
-            await _context.SaveChangesAsync();
+            icomputer.AddComputer(computer);
 
             return CreatedAtAction("GetComputer", new { id = computer.Cpuid }, computer);
         }
 
         // DELETE: api/Computers/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteComputer([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteComputer([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var computer = await _context.Computer.SingleOrDefaultAsync(m => m.Cpuid == id);
-            if (computer == null)
-            {
-                return NotFound();
-            }
+        //    var computer = await _context.Computer.SingleOrDefaultAsync(m => m.Cpuid == id);
+        //    if (computer == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Computer.Remove(computer);
-            await _context.SaveChangesAsync();
+        //    _context.Computer.Remove(computer);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(computer);
-        }
+        //    return Ok(computer);
+        //}
 
-        private bool ComputerExists(int id)
-        {
-            return _context.Computer.Any(e => e.Cpuid == id);
-        }
+        //private bool ComputerExists(int id)
+        //{
+        //    return _context.Computer.Any(e => e.Cpuid == id);
+        //}
     }
 }
