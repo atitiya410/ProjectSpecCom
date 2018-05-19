@@ -2,7 +2,7 @@
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Metadata;
 
-namespace WebapiSpeccom.Models
+namespace SpeccomDB.Models
 {
     public partial class speccomContext : DbContext
     {
@@ -14,16 +14,20 @@ namespace WebapiSpeccom.Models
         public virtual DbSet<User> User { get; set; }
 
         public speccomContext(DbContextOptions<speccomContext> options)
-    : base(options)
+        : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Computer>(entity =>
             {
-                entity.HasKey(e => e.Cpuid);
+                entity.HasKey(e => e.ProcessorId);
 
-                entity.Property(e => e.Cpuid).HasColumnName("CPUID");
+                entity.Property(e => e.ProcessorId)
+                    .HasColumnName("ProcessorID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false)
+                    .ValueGeneratedNever();
 
                 entity.Property(e => e.Cpuname)
                     .HasColumnName("CPUName")
@@ -33,24 +37,22 @@ namespace WebapiSpeccom.Models
                 entity.Property(e => e.LastUpdate)
                     .HasColumnType("datetime")
                     .HasDefaultValueSql("(getdate())");
-
-                entity.Property(e => e.ProcessorId)
-                    .HasColumnName("ProcessorID")
-                    .HasMaxLength(20)
-                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<ComputerUser>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.Cpuid });
+                entity.HasKey(e => new { e.UserId, e.ProcessorId });
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.Property(e => e.Cpuid).HasColumnName("CPUID");
+                entity.Property(e => e.ProcessorId)
+                    .HasColumnName("ProcessorID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.Cpu)
+                entity.HasOne(d => d.Processor)
                     .WithMany(p => p.ComputerUser)
-                    .HasForeignKey(d => d.Cpuid)
+                    .HasForeignKey(d => d.ProcessorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ComputerUser_Computer");
 
@@ -69,11 +71,15 @@ namespace WebapiSpeccom.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Cpuid).HasColumnName("CPUID");
+                entity.Property(e => e.ProcessorId)
+                    .IsRequired()
+                    .HasColumnName("ProcessorID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.Cpu)
+                entity.HasOne(d => d.Processor)
                     .WithMany(p => p.DiskDrive)
-                    .HasForeignKey(d => d.Cpuid)
+                    .HasForeignKey(d => d.ProcessorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DiskDrive_Computer");
             });
@@ -90,11 +96,15 @@ namespace WebapiSpeccom.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.Cpuid).HasColumnName("CPUID");
+                entity.Property(e => e.ProcessorId)
+                    .IsRequired()
+                    .HasColumnName("ProcessorID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
 
-                entity.HasOne(d => d.Cpu)
+                entity.HasOne(d => d.Processor)
                     .WithMany(p => p.GraphicCard)
-                    .HasForeignKey(d => d.Cpuid)
+                    .HasForeignKey(d => d.ProcessorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Graphic Card_Computer");
             });
@@ -103,16 +113,20 @@ namespace WebapiSpeccom.Models
             {
                 entity.Property(e => e.MemoryId).HasColumnName("MemoryID");
 
-                entity.Property(e => e.Cpuid).HasColumnName("CPUID");
-
                 entity.Property(e => e.MemoryType)
                     .IsRequired()
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Cpu)
+                entity.Property(e => e.ProcessorId)
+                    .IsRequired()
+                    .HasColumnName("ProcessorID")
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.HasOne(d => d.Processor)
                     .WithMany(p => p.Memory)
-                    .HasForeignKey(d => d.Cpuid)
+                    .HasForeignKey(d => d.ProcessorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Memory_Computer");
             });

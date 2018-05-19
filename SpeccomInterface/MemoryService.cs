@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using SpeccomDB.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WebapiSpeccom.Models;
 
 namespace SpeccomInterface
 {
@@ -16,8 +14,8 @@ namespace SpeccomInterface
         }
         public async void AddMemory(Memory memory)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
-            memory.Cpuid = comid;
+            var comid = _context.Computer.Max(s => s.ProcessorId);
+            memory.ProcessorId = comid;
 
 
             _context.Memory.Add(memory);

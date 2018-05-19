@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using SpeccomDB.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WebapiSpeccom.Models;
 
 namespace SpeccomInterface
 {
@@ -17,13 +15,19 @@ namespace SpeccomInterface
 
         public void AddComputerUser(ComputerUser computerUser)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
+            var processorid = _context.Computer.Max(s => s.ProcessorId);
             var userid = _context.User.Max(m => m.UserId);
-           
+            var comuser = _context.ComputerUser.Where(s => s.ProcessorId == processorid && s.UserId == userid);
+            if (comuser == null)
+            {
+                computerUser.UserId = userid;
+                computerUser.ProcessorId = processorid;
+                _context.ComputerUser.Add(computerUser);
+            }
+            
 
-            computerUser.UserId = userid;
-            computerUser.Cpuid = comid;
-            _context.ComputerUser.Add(computerUser);
+
+           
         }
 
         public ComputerUser GetCompuerUserByID(int id)

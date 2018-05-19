@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using SpeccomDB.Models;
 using SpeccomInterface;
-using WebapiSpeccom.Models;
 
 namespace WebapiSpeccom.Controllers
 {
@@ -30,7 +25,7 @@ namespace WebapiSpeccom.Controllers
 
         // GET: api/Computers/5
         [HttpGet("{id}")]
-        public IActionResult GetComputer([FromRoute] int id)
+        public IActionResult GetComputer([FromRoute] string id)
         {
             if (!ModelState.IsValid)
             {
@@ -50,14 +45,14 @@ namespace WebapiSpeccom.Controllers
 
         // PUT: api/Computers/5
         [HttpPut("{id}")]
-        public  IActionResult PutComputer([FromRoute] int id, [FromBody] Computer computer)
+        public  IActionResult PutComputer([FromRoute] string id, [FromBody] Computer computer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            if (id != computer.Cpuid)
+            if (id != computer.ProcessorId)
             {
                 return BadRequest();
             }
@@ -77,7 +72,7 @@ namespace WebapiSpeccom.Controllers
             }
             icomputer.AddComputer(computer);
 
-            return CreatedAtAction("GetComputer", new { id = computer.Cpuid }, computer);
+            return CreatedAtAction("GetComputer", new { id = computer.ProcessorId }, computer);
         }
 
         // DELETE: api/Computers/5

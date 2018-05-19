@@ -1,9 +1,10 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpeccomDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WebapiSpeccom.Models;
+
 
 namespace SpeccomInterface
 {
@@ -17,7 +18,7 @@ namespace SpeccomInterface
 
         public async void AddComputer(Computer computer)
         {
-            var computerid = await _context.Computer.SingleOrDefaultAsync(a => a.Cpuid == computer.Cpuid);
+            var computerid = await _context.Computer.SingleOrDefaultAsync(a => a.ProcessorId == computer.ProcessorId);
             if (computerid == null)
             {
                 _context.Computer.Add(computer);
@@ -31,12 +32,12 @@ namespace SpeccomInterface
            return _context.Computer;
         }
 
-        public Computer GetComputerByID(int id)
+        public Computer GetComputerByID(string id)
         {
-            return _context.Computer.SingleOrDefault(m => m.Cpuid == id);
+            return _context.Computer.SingleOrDefault(m => m.ProcessorId == id);
         }
 
-        public void PutComputer(int id, Computer computer)
+        public void PutComputer(string id, Computer computer)
         {
             _context.Entry(computer).State = EntityState.Modified;
 

@@ -1,9 +1,9 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpeccomDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
-using WebapiSpeccom.Models;
 
 namespace SpeccomInterface
 {
@@ -15,14 +15,11 @@ namespace SpeccomInterface
             _context = context;
         }
 
-        public async void AddDiskDrive(DiskDrive diskDrive)
+        public void AddDiskDrive(DiskDrive diskDrive)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
-            diskDrive.Cpuid = comid;
-           
-
+            
             _context.DiskDrive.Add(diskDrive);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
         }
 
         public IEnumerable<DiskDrive> GetAllDiskDrive()

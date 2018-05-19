@@ -1,9 +1,7 @@
 ﻿using Microsoft.EntityFrameworkCore;
-using System;
+using SpeccomDB.Models;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WebapiSpeccom.Models;
 
 namespace SpeccomInterface
 {
@@ -29,13 +27,13 @@ namespace SpeccomInterface
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public async void AddUser(User user)
+        public void AddUser(User user)
         {
-            var username = await _context.User.SingleOrDefaultAsync(a => a.UserName == user.UserName);
+            var username = _context.User.SingleOrDefault(a => a.UserName == user.UserName);
             if (username == null)
             {
                 _context.User.Add(user);
-                await _context.SaveChangesAsync();
+                _context.SaveChanges();
 
             }
         }

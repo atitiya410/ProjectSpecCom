@@ -1,7 +1,8 @@
-﻿using System;
+﻿using SpeccomDB.Models;
+using System;
 using System.Collections.Generic;
 using System.Text;
-using WebapiSpeccom.Models;
+
 
 namespace SpeccomInterface
 {

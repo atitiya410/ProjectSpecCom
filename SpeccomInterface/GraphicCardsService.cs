@@ -1,9 +1,8 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using SpeccomDB.Models;
 using System;
 using System.Collections.Generic;
 using System.Linq;
-using System.Text;
-using WebapiSpeccom.Models;
 
 namespace SpeccomInterface
 {
@@ -17,7 +16,7 @@ namespace SpeccomInterface
 
         public async void AddGraphicCard(GraphicCard graphicCard)
         {
-            var graphic = await _context.GraphicCard.SingleOrDefaultAsync(a => a.Cpuid == graphicCard.Cpuid);
+            var graphic = await _context.GraphicCard.SingleOrDefaultAsync(a => a.ProcessorId == graphicCard.ProcessorId);
             if (graphic == null)
             {
                 _context.GraphicCard.Add(graphic);

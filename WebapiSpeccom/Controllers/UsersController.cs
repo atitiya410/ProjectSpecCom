@@ -1,12 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
+using SpeccomDB.Models;
 using SpeccomInterface;
-using WebapiSpeccom.Models;
 
 namespace WebapiSpeccom.Controllers
 {
