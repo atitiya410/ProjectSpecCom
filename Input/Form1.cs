@@ -9,8 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ConsoleApp1.Models;
 using Newtonsoft.Json;
+using SpeccomDB.Models;
 
 namespace Input
 {
@@ -65,8 +65,7 @@ namespace Input
             await getData.getMemory();
             await getData.getGraphicCard();
             await getData.getHDD();
-            ComputerUser computerUser = new ComputerUser();
-            await sendData.CreateComUser(computerUser);
+            await getData.getComuser();
 
             this.Close();
         }

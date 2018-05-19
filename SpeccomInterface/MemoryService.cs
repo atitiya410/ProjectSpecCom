@@ -12,14 +12,12 @@ namespace SpeccomInterface
         {
             _context = context;
         }
-        public async void AddMemory(Memory memory)
+        public void AddMemory(Memory memory)
         {
-            var comid = _context.Computer.Max(s => s.ProcessorId);
-            memory.ProcessorId = comid;
-
-
+           
+ 
             _context.Memory.Add(memory);
-            await _context.SaveChangesAsync();
+            _context.SaveChangesAsync();
         }
 
         public IEnumerable<Memory> GetAllMemories()

@@ -1,12 +1,8 @@
-﻿using ConsoleApp1.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Management;
+using SpeccomDB.Models;
 
 namespace Input
 {

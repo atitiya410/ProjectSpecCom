@@ -17,7 +17,7 @@ namespace SpeccomInterface
 
         public void AddDiskDrive(DiskDrive diskDrive)
         {
-            
+
             _context.DiskDrive.Add(diskDrive);
             _context.SaveChangesAsync();
         }

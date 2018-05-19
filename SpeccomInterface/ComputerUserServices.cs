@@ -15,13 +15,11 @@ namespace SpeccomInterface
 
         public void AddComputerUser(ComputerUser computerUser)
         {
-            var processorid = _context.Computer.Max(s => s.ProcessorId);
             var userid = _context.User.Max(m => m.UserId);
-            var comuser = _context.ComputerUser.Where(s => s.ProcessorId == processorid && s.UserId == userid);
+            var comuser = _context.ComputerUser.Where(s => s.ProcessorId == computerUser.ProcessorId && s.UserId == userid);
             if (comuser == null)
             {
                 computerUser.UserId = userid;
-                computerUser.ProcessorId = processorid;
                 _context.ComputerUser.Add(computerUser);
             }
             

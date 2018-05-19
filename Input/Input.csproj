@@ -109,6 +109,7 @@
     <Compile Include="Models\DiskDrive.cs" />
     <Compile Include="Models\GraphicCard.cs" />
     <Compile Include="Models\Memory.cs" />
+    <Compile Include="Models\speccomContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

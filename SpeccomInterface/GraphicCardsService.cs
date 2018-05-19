@@ -14,15 +14,13 @@ namespace SpeccomInterface
             _context = context;
         }
 
-        public async void AddGraphicCard(GraphicCard graphicCard)
+        public void AddGraphicCard(GraphicCard graphicCard)
         {
-            var graphic = await _context.GraphicCard.SingleOrDefaultAsync(a => a.ProcessorId == graphicCard.ProcessorId);
-            if (graphic == null)
-            {
-                _context.GraphicCard.Add(graphic);
-                await _context.SaveChangesAsync();
+            
+                _context.GraphicCard.Add(graphicCard);
+                _context.SaveChangesAsync();
 
-            }
+            
         }
 
         public IEnumerable<GraphicCard> GetAllGraphicCard()

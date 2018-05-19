@@ -16,13 +16,13 @@ namespace SpeccomInterface
             _context = context;
         }
 
-        public async void AddComputer(Computer computer)
+        public void AddComputer(Computer computer)
         {
-            var computerid = await _context.Computer.SingleOrDefaultAsync(a => a.ProcessorId == computer.ProcessorId);
+            var computerid = _context.Computer.SingleOrDefault(a => a.ProcessorId == computer.ProcessorId);
             if (computerid == null)
             {
                 _context.Computer.Add(computer);
-                await _context.SaveChangesAsync();
+                _context.SaveChangesAsync();
 
             }
         }

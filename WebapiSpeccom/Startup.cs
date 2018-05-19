@@ -33,6 +33,11 @@ namespace WebapiSpeccom
             services.AddDbContext<speccomContext>(options => options.UseSqlServer(connection));
 
             services.AddScoped<IUser, UserServices > ();
+            services.AddScoped<IComputer, ComputerService>();
+            services.AddScoped<IComputerUser, ComputerUserServices>();
+            services.AddScoped<IMemory, MemoryService>();
+            services.AddScoped<IDiskDrive, DiskDriveService>();
+            services.AddScoped<IGraphicCards, GraphicCardsService>();
         }
 
         // This method gets called by the runtime. Use this method to configure the HTTP request pipeline.
