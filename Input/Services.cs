@@ -42,7 +42,7 @@ namespace Input
             {
                 Memory memory = new Memory();
                 string memoryt = null;
-                Console.WriteLine("Capacity : " + Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024) + " GB");
+                Console.WriteLine("Capacity : " + Convert.ToUInt64(mj["Capacity"]) / (1000 * 1000 * 1000) + " GB");
                 int memorytype = Convert.ToUInt16(mj["MemoryType"]);
                 if (memorytype == 20)
                 {
@@ -69,7 +69,7 @@ namespace Input
                     //Console.WriteLine("Memory Type : FBD2 ");
                     memoryt = "FBD2";
                 }
-                memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024));
+                memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1000 * 1000 * 1000));
                 memory.MemoryType = memoryt;
                 memories.Add(memory);
                 
@@ -87,9 +87,9 @@ namespace Input
             {
                 GraphicCard graphicCard = new GraphicCard();
                 Console.WriteLine("Graphic Card Name : " + Convert.ToString(mj["Caption"]));
-                Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
+                Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1000 * 1000 * 1000) + " GB");
                 graphicCard.Caption = Convert.ToString(mj["Caption"]);
-                graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
+                graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1000 * 1000 * 1000));
                 graphicCards.Add(graphicCard);
 
             }
@@ -106,7 +106,7 @@ namespace Input
                 //Console.WriteLine("DiskDrive Name : " + Convert.ToString(mj["Caption"]));
                 //Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
                 diskDrive.Caption = Convert.ToString(mj["Caption"]);
-                diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1024) / 1024) / 1024);
+                diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1000) / 1000) / 1000);
                 diskDrives.Add(diskDrive);
             }
 
