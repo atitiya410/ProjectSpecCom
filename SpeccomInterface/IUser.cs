@@ -10,7 +10,7 @@ namespace SpeccomInterface
         IEnumerable<User> GetAllUsers();
         User GetUserByID(int id);
         void PutUser(int id, User user);
-        void AddUser(User user);
+        User AddUser(User user);
         //void DeleteUserByID(int id);
        
     }

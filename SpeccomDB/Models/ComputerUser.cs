@@ -5,7 +5,7 @@ namespace SpeccomDB.Models
 {
     public partial class ComputerUser
     {
-        public int UserId { get; set; }
+        public int? UserId { get; set; }
         public string ProcessorId { get; set; }
 
         public Computer Processor { get; set; }

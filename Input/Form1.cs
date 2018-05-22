@@ -52,21 +52,24 @@ namespace Input
             }
             else
             {
-                MessageBox.Show("Success");
-
-            }
-            User user = new User();
+            
+            User user = new User(); 
             SendData sendData = new SendData();
             user.UserName = textBox1.Text;
-            await sendData.CreateUser(user);
-
-            GetData getData = new GetData();
-            await getData.getComputer();
-            await getData.getMemory();
-            await getData.getGraphicCard();
-            await getData.getHDD();
-            await getData.getComuser();
-
+            user = await sendData.CreateUser(user);
+           
+            //get user by name
+            Services services = new Services();
+            Computer com = new Computer();
+            com = services.GetComputer();
+            com.Memory = services.GetMemory();
+            com.GraphicCard = services.getGraphicCard();
+            com.DiskDrive = services.GetDiskDrive();
+            com.UserId = user.UserId;
+           
+            string result = await sendData.CreateComputer(com);
+            MessageBox.Show(result);
+            }
             this.Close();
         }
 

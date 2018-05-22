@@ -1,24 +1,25 @@
-﻿using System;
-using System.Threading.Tasks;
+﻿using SpeccomDB.Models;
+using System;
+using System.Collections.Generic;
+using System.Linq;
 using System.Management;
-using SpeccomDB.Models;
+using System.Text;
+using System.Threading.Tasks;
 
 namespace Input
 {
-    public class GetData
+    public class Services
     {
-            Computer computer = new Computer();
-            SendData sendData = new SendData();
-        
-        
-        public async Task getComputer()
+        #region get Data
+
+        public Computer GetComputer()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
-           
-           
+            DateTime now = DateTime.Now;
+            Computer computer = new Computer();
             foreach (ManagementObject mj in mos.Get())
             {
-                
+
                 //Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
                 //Console.WriteLine("Core : " + Convert.ToString(mj["NumberOfCores"]));
                 //Console.WriteLine("Thread : " + Convert.ToString(mj["ThreadCount"]));
@@ -27,23 +28,16 @@ namespace Input
                 computer.Cores = Convert.ToInt32(mj["NumberOfCores"]);
                 computer.Thread = Convert.ToInt32(mj["ThreadCount"]);
                 computer.ProcessorId = Convert.ToString(mj["Processorid"]);
-                await sendData.CreateComputer(computer);
-                getMemory();
-                getGraphicCard();
-                getHDD();
-                //getComuser();
-
-
+                computer.LastUpdate = now;
             }
-
+            return computer;
 
         }
-
-        public async void getMemory()
+        public List<Memory> GetMemory()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
 
-           
+            List<Memory> memories = new List<Memory>();
             foreach (ManagementObject mj in mos.Get())
             {
                 Memory memory = new Memory();
@@ -77,16 +71,18 @@ namespace Input
                 }
                 memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024));
                 memory.MemoryType = memoryt;
-                memory.ProcessorId = computer.ProcessorId;
-                await sendData.CreateMemory(memory);
+                memories.Add(memory);
+                
             }
+            return memories;
 
         }
-        public async void getGraphicCard()
+        public List<GraphicCard> getGraphicCard()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
             
-           
+
+            List<GraphicCard> graphicCards = new List<GraphicCard>();
             foreach (ManagementObject mj in mos.Get())
             {
                 GraphicCard graphicCard = new GraphicCard();
@@ -94,16 +90,16 @@ namespace Input
                 Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
                 graphicCard.Caption = Convert.ToString(mj["Caption"]);
                 graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
-                graphicCard.ProcessorId = computer.ProcessorId;
-                await sendData.CreateGraphicCard(graphicCard);
-            }
-        }
+                graphicCards.Add(graphicCard);
 
-        public async void getHDD()
+            }
+            return graphicCards;
+        }
+        public List<DiskDrive> GetDiskDrive()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
-           
-           
+            List<DiskDrive> diskDrives = new List<DiskDrive>();
+
             foreach (ManagementObject mj in mos.Get())
             {
                 DiskDrive diskDrive = new DiskDrive();
@@ -111,10 +107,13 @@ namespace Input
                 //Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
                 diskDrive.Caption = Convert.ToString(mj["Caption"]);
                 diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1024) / 1024) / 1024);
-                diskDrive.ProcessorId = computer.ProcessorId;
-                await sendData.CreateHDD(diskDrive);
+                diskDrives.Add(diskDrive);
             }
+
+            return diskDrives;
         }
+        #endregion
+
 
     }
 }

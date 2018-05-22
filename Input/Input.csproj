@@ -109,11 +109,11 @@
     <Compile Include="Models\DiskDrive.cs" />
     <Compile Include="Models\GraphicCard.cs" />
     <Compile Include="Models\Memory.cs" />
-    <Compile Include="Models\speccomContext.cs" />
     <Compile Include="Models\User.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SendData.cs" />
+    <Compile Include="Services.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>

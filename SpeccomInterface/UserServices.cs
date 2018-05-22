@@ -1,4 +1,5 @@
 ﻿using Microsoft.EntityFrameworkCore;
+using Newtonsoft.Json;
 using SpeccomDB.Models;
 using System.Collections.Generic;
 using System.Linq;
@@ -27,8 +28,9 @@ namespace SpeccomInterface
             _context.Entry(user).State = EntityState.Modified;
         }
 
-        public void AddUser(User user)
+        public User AddUser(User user)
         {
+
             var username = _context.User.SingleOrDefault(a => a.UserName == user.UserName);
             if (username == null)
             {
@@ -36,6 +38,12 @@ namespace SpeccomInterface
                 _context.SaveChanges();
 
             }
+            else
+            {
+                user.UserId =username.UserId;
+            }
+            
+            return user;
         }
 
        

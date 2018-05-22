@@ -72,10 +72,10 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest(ModelState);
             }
 
-            userContext.AddUser(user);
+            user =  userContext.AddUser(user);
 
 
-            return Ok("Create New User");
+            return Ok(user);
         }
 
         //// DELETE: api/Users/5

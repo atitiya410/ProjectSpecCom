@@ -5,19 +5,18 @@ using System.Linq;
 
 namespace SpeccomInterface
 {
-    class MemoryService : IMemory
+    public class MemoryService : IMemory
     {
         private readonly speccomContext _context;
         public MemoryService(speccomContext context)
         {
             _context = context;
         }
-        public void AddMemory(Memory memory)
+        public  void AddMemory(Memory memory)
         {
-           
- 
+            
             _context.Memory.Add(memory);
-            _context.SaveChangesAsync();
+             _context.SaveChangesAsync();
         }
 
         public IEnumerable<Memory> GetAllMemories()

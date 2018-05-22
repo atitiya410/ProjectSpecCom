@@ -11,6 +11,7 @@ namespace SpeccomDB.Models
             DiskDrive = new HashSet<DiskDrive>();
             GraphicCard = new HashSet<GraphicCard>();
             Memory = new HashSet<Memory>();
+            UserId = default(int?); 
         }
 
         public string ProcessorId { get; set; }
@@ -18,6 +19,7 @@ namespace SpeccomDB.Models
         public int? Cores { get; set; }
         public int? Thread { get; set; }
         public DateTime LastUpdate { get; set; }
+        public int? UserId { get; set; }
 
         public ICollection<ComputerUser> ComputerUser { get; set; }
         public ICollection<DiskDrive> DiskDrive { get; set; }

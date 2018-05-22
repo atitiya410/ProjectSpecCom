@@ -65,7 +65,7 @@ namespace WebapiSpeccom.Controllers
 
         // POST: api/Memories
         [HttpPost]
-        public IActionResult PostMemory([FromBody] Memory memory)
+        public  IActionResult PostMemory([FromBody] Memory memory)
         {
             imemory.AddMemory(memory);
 

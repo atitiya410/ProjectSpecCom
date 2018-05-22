@@ -10,24 +10,36 @@ namespace Input
     {
         string url = "http://localhost:57224/";
         //"https://webapispeccom20180518043834.azurewebsites.net/";
-        public async Task CreateUser(User user)
-        {
+        public async Task<User> CreateUser(User user)
+        {            
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await client.PostAsJsonAsync("api/Users", user);
+            HttpResponseMessage response = await client.PostAsJsonAsync("api/Users", user);
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<User>();
+            }
+            return user;
         }
 
-        public async Task CreateComputer(Computer computer)
+        public async Task<string> CreateComputer(Computer computer)
         {
             HttpClient client = new HttpClient();
             client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-   
-            var response =await client.PostAsJsonAsync("api/Computers", computer);
+
+            HttpResponseMessage response =await client.PostAsJsonAsync("api/Computers", computer);
+            string result = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                result = await response.Content.ReadAsAsync<string>();
+            }
+            return result;
         }
 
         public async Task CreateMemory(Memory memory)
@@ -60,14 +72,14 @@ namespace Input
             var response = await client.PostAsJsonAsync("api/DiskDrives", diskDrive);
         }
 
-        public async Task CreateComUser(ComputerUser computerUser)
-        {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri(url);
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //public void CreateComUser(ComputerUser computerUser)
+        //{
+        //    HttpClient client = new HttpClient();
+        //    client.BaseAddress = new Uri(url);
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await client.PostAsJsonAsync("api/ComputerUsers", computerUser);
-        }
+        //    var response =  client.PostAsJsonAsync("api/ComputerUsers", computerUser);
+        //}
     }
 }

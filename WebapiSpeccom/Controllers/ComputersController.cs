@@ -1,5 +1,7 @@
 ﻿using System.Collections.Generic;
+using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SpeccomDB.Models;
 using SpeccomInterface;
 
@@ -64,15 +66,19 @@ namespace WebapiSpeccom.Controllers
 
         // POST: api/Computers
         [HttpPost]
-        public IActionResult PostComputer([FromBody] Computer computer)
+        public  IActionResult PostComputer([FromBody] Computer computer)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
-            icomputer.AddComputer(computer);
+            string result= icomputer.AddComputer(computer);
 
-            return CreatedAtAction("GetComputer", new { id = computer.ProcessorId }, computer);
+
+            return Ok(result);
+            //return Ok("success");
+            //return CreatedAtAction("GetComputer", computer.ProcessorId);
+
         }
 
         // DELETE: api/Computers/5
