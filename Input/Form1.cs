@@ -23,13 +23,12 @@ namespace Input
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Put your name in the textbox Name and pressing the button OK");
+           // MessageBox.Show("Put your name in the textbox Name and pressing the button OK");
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
         {
-  
-            button1.Enabled = true;
+            button1.Enabled = true; //Set the command button to work
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
