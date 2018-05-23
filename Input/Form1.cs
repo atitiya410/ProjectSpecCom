@@ -9,8 +9,8 @@ using System.Text;
 using System.Text.RegularExpressions;
 using System.Threading.Tasks;
 using System.Windows.Forms;
-using ConsoleApp1.Models;
 using Newtonsoft.Json;
+using SpeccomDB.Models;
 
 namespace Input
 {
@@ -23,7 +23,7 @@ namespace Input
 
         private void Form1_Load(object sender, EventArgs e)
         {
-            MessageBox.Show("Put your name in the textbox Name and pressing the button OK");
+
         }
 
         private void textBox1_TextChanged(object sender, EventArgs e)
@@ -52,22 +52,24 @@ namespace Input
             }
             else
             {
-                MessageBox.Show("Success");
-
-            }
-            User user = new User();
+            
+            User user = new User(); 
             SendData sendData = new SendData();
             user.UserName = textBox1.Text;
-            await sendData.CreateUser(user);
-
-            GetData getData = new GetData();
-            await getData.getComputer();
-            await getData.getMemory();
-            await getData.getGraphicCard();
-            await getData.getHDD();
-            ComputerUser computerUser = new ComputerUser();
-            await sendData.CreateComUser(computerUser);
-
+            user = await sendData.CreateUser(user);
+           
+            //get user by name
+            Services services = new Services();
+            Computer com = new Computer();
+            com = services.GetComputer();
+            com.Memory = services.GetMemory();
+            com.GraphicCard = services.getGraphicCard();
+            com.DiskDrive = services.GetDiskDrive();
+            com.UserId = user.UserId;
+           
+            string result = await sendData.CreateComputer(com);
+            MessageBox.Show(result);
+            }
             this.Close();
         }
 

@@ -1,15 +1,15 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace WebapiSpeccom.Models
+namespace SpeccomDB.Models
 {
     public partial class DiskDrive
     {
         public int DiskDriveId { get; set; }
         public int? Size { get; set; }
         public string Caption { get; set; }
-        public int Cpuid { get; set; }
+        public string ProcessorId { get; set; }
 
-        public Computer Cpu { get; set; }
+        public Computer Processor { get; set; }
     }
 }

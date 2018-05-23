@@ -1,35 +1,25 @@
-﻿using System;
+﻿using SpeccomDB.Models;
+using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Management;
 using System.Text;
 using System.Threading.Tasks;
-using System.Management;
-using ConsoleApp1.Models;
-namespace ConsoleApp1
+
+namespace Input
 {
-    class Program
+    public class Services
     {
-        static void Main(string[] args)
-        {
-            
-            getComputer();
-            getMemory();
-            getGraphicCard();
-            getHDD();
+        #region get Data
 
-
-
-            Console.ReadKey();
-        }
-
-        private static void getComputer()
+        public Computer GetComputer()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_Processor");
+            DateTime now = DateTime.Now;
             Computer computer = new Computer();
-
             foreach (ManagementObject mj in mos.Get())
             {
-                
+
                 //Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
                 //Console.WriteLine("Core : " + Convert.ToString(mj["NumberOfCores"]));
                 //Console.WriteLine("Thread : " + Convert.ToString(mj["ThreadCount"]));
@@ -38,20 +28,21 @@ namespace ConsoleApp1
                 computer.Cores = Convert.ToInt32(mj["NumberOfCores"]);
                 computer.Thread = Convert.ToInt32(mj["ThreadCount"]);
                 computer.ProcessorId = Convert.ToString(mj["Processorid"]);
-
+                computer.LastUpdate = now;
             }
-         
+            return computer;
 
         }
-
-        private static void getMemory()
+        public List<Memory> GetMemory()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_PhysicalMemory");
-            Memory memory = new Memory();
+
+            List<Memory> memories = new List<Memory>();
             foreach (ManagementObject mj in mos.Get())
             {
+                Memory memory = new Memory();
                 string memoryt = null;
-                Console.WriteLine("Capacity : " + Convert.ToUInt64(mj["Capacity"])/(1024*1024*1024) + " GB");
+                Console.WriteLine("Capacity : " + Convert.ToUInt64(mj["Capacity"]) / (1000 * 1000 * 1000) + " GB");
                 int memorytype = Convert.ToUInt16(mj["MemoryType"]);
                 if (memorytype == 20)
                 {
@@ -78,38 +69,50 @@ namespace ConsoleApp1
                     //Console.WriteLine("Memory Type : FBD2 ");
                     memoryt = "FBD2";
                 }
-                memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024));
+                memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1000 * 1000 * 1000));
                 memory.MemoryType = memoryt;
+                memories.Add(memory);
+                
             }
+            return memories;
 
         }
-        private static void getGraphicCard()
+        public List<GraphicCard> getGraphicCard()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_VideoController");
-            GraphicCard graphicCard = new GraphicCard();
+            
+
+            List<GraphicCard> graphicCards = new List<GraphicCard>();
             foreach (ManagementObject mj in mos.Get())
             {
+                GraphicCard graphicCard = new GraphicCard();
                 Console.WriteLine("Graphic Card Name : " + Convert.ToString(mj["Caption"]));
-                Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
+                Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1000 * 1000 * 1000) + " GB");
                 graphicCard.Caption = Convert.ToString(mj["Caption"]);
-                graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
-            }
-        }
+                graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1000 * 1000 * 1000));
+                graphicCards.Add(graphicCard);
 
-        private static void getHDD()
+            }
+            return graphicCards;
+        }
+        public List<DiskDrive> GetDiskDrive()
         {
             ManagementObjectSearcher mos = new ManagementObjectSearcher("SELECT * FROM Win32_DiskDrive");
-            DiskDrive diskDrive = new DiskDrive();
+            List<DiskDrive> diskDrives = new List<DiskDrive>();
+
             foreach (ManagementObject mj in mos.Get())
             {
+                DiskDrive diskDrive = new DiskDrive();
                 //Console.WriteLine("DiskDrive Name : " + Convert.ToString(mj["Caption"]));
                 //Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
                 diskDrive.Caption = Convert.ToString(mj["Caption"]);
-                diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/ 1024);
+                diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1000) / 1000) / 1000);
+                diskDrives.Add(diskDrive);
             }
+
+            return diskDrives;
         }
-
-
+        #endregion
 
 
     }

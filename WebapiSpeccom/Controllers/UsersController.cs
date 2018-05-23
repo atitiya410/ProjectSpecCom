@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebapiSpeccom.Models;
+using SpeccomDB.Models;
+using SpeccomInterface;
 
 namespace WebapiSpeccom.Controllers
 {
@@ -13,30 +9,30 @@ namespace WebapiSpeccom.Controllers
     [Route("api/Users")]
     public class UsersController : Controller
     {
-        private readonly speccomContext _context;
+        private readonly IUser userContext;
 
-        public UsersController(speccomContext context)
+        public UsersController(IUser context)
         {
-            _context = context;
+            userContext = context;
         }
 
         // GET: api/Users
         [HttpGet]
         public IEnumerable<User> GetUser()
         {
-            return _context.User;
+            return userContext.GetAllUsers();
         }
 
         // GET: api/Users/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetUser([FromRoute] int id)
+        public IActionResult GetUser([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
+            var user = userContext.GetUserByID(id);
 
             if (user == null)
             {
@@ -48,7 +44,7 @@ namespace WebapiSpeccom.Controllers
 
         // PUT: api/Users/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutUser([FromRoute] int id, [FromBody] User user)
+        public IActionResult PutUser([FromRoute] int id, [FromBody] User user)
         {
             if (!ModelState.IsValid)
             {
@@ -59,78 +55,49 @@ namespace WebapiSpeccom.Controllers
             {
                 return BadRequest();
             }
+            userContext.PutUser(id, user);
 
-            _context.Entry(user).State = EntityState.Modified;
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!UserExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
 
             return NoContent();
         }
 
         // POST: api/Users
         [HttpPost]
-        public async Task<IActionResult> PostUser([FromBody] User user)
-        {   
-
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-            var username = await _context.User.SingleOrDefaultAsync(a => a.UserName == user.UserName);
-            if (username == null)
-            {
-                _context.User.Add(user);
-                await _context.SaveChangesAsync();
-               
-            }
-            else
-            {
-                return Ok("Update New User");
-            }
-
-
-
-            return Ok("Create New User");
-        }
-
-        // DELETE: api/Users/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteUser([FromRoute] int id)
+        public IActionResult PostUser([FromBody] User user)
         {
+
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var user = await _context.User.SingleOrDefaultAsync(m => m.UserId == id);
-            if (user == null)
-            {
-                return NotFound();
-            }
+            user =  userContext.AddUser(user);
 
-            _context.User.Remove(user);
-            await _context.SaveChangesAsync();
 
             return Ok(user);
         }
 
-        private bool UserExists(int id)
-        {
-            return _context.User.Any(e => e.UserId == id);
-        }
+        //// DELETE: api/Users/5
+        //[HttpDelete("{id}")]
+        //public IActionResult DeleteUser([FromRoute] int id)
+        //{
+        //    //if (!ModelState.IsValid)
+        //    //{
+        //    //    return BadRequest(ModelState);
+        //    //}
+
+        //    //var user = _context.User.SingleOrDefaultAsync(m => m.UserId == id);
+        //    //if (user == null)
+        //    //{
+        //    //    return NotFound();
+        //    //}
+
+        //    //_context.User.Remove(user);
+        //    //_context.SaveChangesAsync();
+
+        //    //return Ok(user);
+        //}
+
     }
 }

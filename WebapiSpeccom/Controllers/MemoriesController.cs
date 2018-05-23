@@ -1,11 +1,7 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Threading.Tasks;
-using Microsoft.AspNetCore.Http;
+﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
-using Microsoft.EntityFrameworkCore;
-using WebapiSpeccom.Models;
+using SpeccomDB.Models;
+using SpeccomInterface;
 
 namespace WebapiSpeccom.Controllers
 {
@@ -13,30 +9,30 @@ namespace WebapiSpeccom.Controllers
     [Route("api/Memories")]
     public class MemoriesController : Controller
     {
-        private readonly speccomContext _context;
+        private readonly IMemory imemory;
 
-        public MemoriesController(speccomContext context)
+        public MemoriesController(IMemory context)
         {
-            _context = context;
+            imemory = context;
         }
 
         // GET: api/Memories
         [HttpGet]
         public IEnumerable<Memory> GetMemory()
         {
-            return _context.Memory;
+            return imemory.GetAllMemories();
         }
 
         // GET: api/Memories/5
         [HttpGet("{id}")]
-        public async Task<IActionResult> GetMemory([FromRoute] int id)
+        public IActionResult GetMemory([FromRoute] int id)
         {
             if (!ModelState.IsValid)
             {
                 return BadRequest(ModelState);
             }
 
-            var memory = await _context.Memory.SingleOrDefaultAsync(m => m.MemoryId == id);
+            var memory = imemory.GetMemoryByID(id);
 
             if (memory == null)
             {
@@ -48,7 +44,7 @@ namespace WebapiSpeccom.Controllers
 
         // PUT: api/Memories/5
         [HttpPut("{id}")]
-        public async Task<IActionResult> PutMemory([FromRoute] int id, [FromBody] Memory memory)
+        public IActionResult PutMemory([FromRoute] int id, [FromBody] Memory memory)
         {
             if (!ModelState.IsValid)
             {
@@ -60,68 +56,46 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest();
             }
 
-            _context.Entry(memory).State = EntityState.Modified;
+            imemory.PutMemory(id, memory);
 
-            try
-            {
-                await _context.SaveChangesAsync();
-            }
-            catch (DbUpdateConcurrencyException)
-            {
-                if (!MemoryExists(id))
-                {
-                    return NotFound();
-                }
-                else
-                {
-                    throw;
-                }
-            }
+
 
             return NoContent();
         }
 
         // POST: api/Memories
         [HttpPost]
-        public async Task<IActionResult> PostMemory([FromBody] Memory memory)
+        public  IActionResult PostMemory([FromBody] Memory memory)
         {
-            var comid = _context.Computer.Max(s => s.Cpuid);
-            memory.Cpuid = comid;
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
-           
-            _context.Memory.Add(memory);
-            await _context.SaveChangesAsync();
+            imemory.AddMemory(memory);
 
             return CreatedAtAction("GetMemory", new { id = memory.MemoryId }, memory);
         }
 
         // DELETE: api/Memories/5
-        [HttpDelete("{id}")]
-        public async Task<IActionResult> DeleteMemory([FromRoute] int id)
-        {
-            if (!ModelState.IsValid)
-            {
-                return BadRequest(ModelState);
-            }
+        //[HttpDelete("{id}")]
+        //public async Task<IActionResult> DeleteMemory([FromRoute] int id)
+        //{
+        //    if (!ModelState.IsValid)
+        //    {
+        //        return BadRequest(ModelState);
+        //    }
 
-            var memory = await _context.Memory.SingleOrDefaultAsync(m => m.MemoryId == id);
-            if (memory == null)
-            {
-                return NotFound();
-            }
+        //    var memory = await _context.Memory.SingleOrDefaultAsync(m => m.MemoryId == id);
+        //    if (memory == null)
+        //    {
+        //        return NotFound();
+        //    }
 
-            _context.Memory.Remove(memory);
-            await _context.SaveChangesAsync();
+        //    _context.Memory.Remove(memory);
+        //    await _context.SaveChangesAsync();
 
-            return Ok(memory);
-        }
+        //    return Ok(memory);
+        //}
 
-        private bool MemoryExists(int id)
-        {
-            return _context.Memory.Any(e => e.MemoryId == id);
-        }
+        //private bool MemoryExists(int id)
+        //{
+        //    return _context.Memory.Any(e => e.MemoryId == id);
+        //}
     }
 }

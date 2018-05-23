@@ -1,7 +1,8 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations.Schema;
 
-namespace WebapiSpeccom.Models
+namespace SpeccomDB.Models
 {
     public partial class Computer
     {
@@ -13,12 +14,13 @@ namespace WebapiSpeccom.Models
             Memory = new HashSet<Memory>();
         }
 
-        public int Cpuid { get; set; }
+        public string ProcessorId { get; set; }
         public string Cpuname { get; set; }
         public int? Cores { get; set; }
         public int? Thread { get; set; }
-        public string ProcessorId { get; set; }
         public DateTime LastUpdate { get; set; }
+        [NotMapped]
+        public int? UserId { get; set; }
 
         public ICollection<ComputerUser> ComputerUser { get; set; }
         public ICollection<DiskDrive> DiskDrive { get; set; }
