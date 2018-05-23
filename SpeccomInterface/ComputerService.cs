@@ -105,9 +105,21 @@ namespace SpeccomInterface
 
         }
 
-        public IEnumerable<Computer> GetAllComputers()
+        public IEnumerable<ComInfo> GetComputersInfo()
         {
-            return _context.Computer;
+
+            var items = (from c in _context.Computer
+                         join cu in _context.ComputerUser on c.ProcessorId equals cu.ProcessorId
+                         join us in _context.User on cu.UserId equals us.UserId
+                         join m in _context.Memory on c.ProcessorId equals m.ProcessorId
+                         select new ComInfo
+                         {
+                             UserId = us.UserId,
+                             Cpuname = c.Cpuname,
+                             Capacity = m.Capacity
+                         });
+
+            return items;
         }
 
         public Computer GetComputerByID(string id)
@@ -119,6 +131,16 @@ namespace SpeccomInterface
         {
             _context.Entry(computer).State = EntityState.Modified;
 
+        }
+
+        public IEnumerable<Computer> GetAllComputers()
+        {
+            var items = _context.Computer
+               .Include(c => c.DiskDrive)
+               .Include(c => c.Memory)
+               .Include(c => c.GraphicCard)
+               .Include(u => u.ComputerUser).ThenInclude(uc => uc.User);
+            return items;
         }
     }
 }

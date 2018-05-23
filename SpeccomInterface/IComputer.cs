@@ -13,5 +13,6 @@ namespace SpeccomInterface
         Computer GetComputerByID(string id);
         void PutComputer(string id, Computer computer);
         string AddComputer(Computer computer);
+        IEnumerable<ComInfo> GetComputersInfo();
     }
 }
