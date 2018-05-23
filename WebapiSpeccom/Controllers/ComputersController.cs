@@ -29,8 +29,9 @@ namespace WebapiSpeccom.Controllers
                 new JsonSerializerSettings()
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
-
-                });
+                    
+        });
+            
 
             return Ok(jResult);
         }
