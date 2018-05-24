@@ -7,7 +7,7 @@ namespace SpeccomInterface
 {
     public interface IUser
     {
-        IEnumerable<User> GetAllUsers();
+        object GetAllUsers();
         User GetUserByID(int id);
         void PutUser(int id, User user);
         User AddUser(User user);

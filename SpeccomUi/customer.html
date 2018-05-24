@@ -20,57 +20,47 @@
     </script>
 
     <script src="main.js"></script>
+
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
 </head>
-<style>
-#lightx {
-	background-color: lightblue;
-}
-</style>
-<body background="maxresdefault.jpg">
+
+
+<body>
     <div class="container">
-        <div class="row">
+        <div class="row" id="lightx">
             <div class="col-md-12">
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8" style="text-align: center">
-                        <h1>MycosShop</h1>
+                        <h1>Spec Computer</h1>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
             </div>
             <div class="col-md-12">
-                <table class="table" id="customerTable">
+                <table class="table" id="productTable">
                 </table>
-                <div style="text-align: center" class="form-group mt-5">
-                    <label>max</label>
-                    <input type="text" id="maxInput" readonly class="mr-5">
 
-                    <label>min</label>
-                    <input type="text" readonly id="minInput" class="mr-5">
-
-                    <label>avg</label>
-                    <input type="text" readonly id="avgInput" class="mr-5">
-
-                     <label>sum</label>
-                    <input type="text" readonly id="sumInput" class="mr-5">
-                </div>
             </div>
         </div>
     </div>
-
-
-
+    
     <script>
         $(document).ready(function () {
 
 
-            console.log(urlApi + "/api/customer");
-            // show customer data
+            console.log(urlApi + "api/Computers");
+            // show product data
             $.ajax({
                 type: 'GET',
-                url: urlApi + "/api/customer",
+                url: urlApi + "api/Computers",
                 timeout: 5000,
                 success: function (res) {
+                    
+                    res = JSON.parse(res)
+                    console.log(JSON.stringify(res))
+                    console.log(res)
                     var columns = [];
                     var data = [];
                     Object.keys(res[0]).forEach(element => {
@@ -78,84 +68,46 @@
                             title: element
                         })
                     });
+                    columns.push({
+                            title: "button"
+                        });
                     res.forEach(element => {
-                        data.push(Object.values(element));
+                        // console.log(Object.values(element))
+
+                        var curParse = Object.values(element);
+                        var useData = [];
+                        curParse.forEach(cur => {
+                            if (typeof cur == 'object')
+                                cur = JSON.stringify(cur);
+                            useData.push(cur);                          
+                        })
+                        data.push(useData);
                     });
 
-                    console.log(columns);
+
+                    
                     console.log(data);
-                    $('#customerTable').DataTable({
+                    var table = $('#productTable').DataTable({
                         "data": data,
-                        "columns": columns
+                        "columns": columns,
+                        "columnDefs": [ {
+                        "targets": -1,
+                        "data": null,
+                        "defaultContent": "<button>Click!</button>"
+                        } ]
                     });
+                     $('#productTable tbody').on( 'click', 'button', function () {
+                        var data = table.row( $(this).parents('tr') ).data();
+                         alert( data[0] +"'Name is: "+ data[ 1 ]);
+                    } 
+                    );
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);
                     console.log("error: " + errorThrown);
                 }
             })
-            // end show product data
-
-            // show Max 
-            $.ajax({
-                type: 'GET',
-                url: urlApi + "/api/customer/getmax",
-                timeout: 5000,
-                success: function (res) {
-                    console.log(res);
-                    $('#maxInput').val(res)
-                },
-                error: function (err) {
-                    nsole.log(err);
-                }
-            });
-            // End show Max 
-
-            // show Min 
-            $.ajax({
-                type: 'GET',
-                url: urlApi + "/api/customer/getmin",
-                timeout: 5000,
-                success: function (res) {
-                    console.log(res);
-                    $('#minInput').val(res)
-                },
-                error: function (err) {
-                    nsole.log(err);
-                }
-            });
-            // End show Min 
-
-
-            // show AVG 
-            $.ajax({
-                type: 'GET',
-                url: urlApi + "/api/customer/getavg",
-                timeout: 5000,
-                success: function (res) {
-                    console.log(res);
-                    $('#avgInput').val(res)
-                },
-                error: function (err) {
-                    nsole.log(err);
-                }
-            });
-            // End show AVG 
-
-            // show sum 
-            $.ajax({
-                type: 'GET',
-                url: urlApi + "/api/customer/getsum",
-                timeout: 5000,
-                success: function (res) {
-                    console.log(res);
-                    $('#sumInput').val(res)
-                },
-                error: function (err) {
-                    nsole.log(err);
-                }
-            });
-            // End show SUM 
+            
         });
     </script>
 </body>

@@ -8,8 +8,8 @@ namespace Input
 {
     class SendData
     {
-        string url = "http://localhost:57224/";
-        //"https://webapispeccom20180518043834.azurewebsites.net/";
+        string url = "https://webapispeccom20180518043834.azurewebsites.net/";
+        //"http://localhost:57224/";
         public async Task<User> CreateUser(User user)
         {            
             HttpClient client = new HttpClient();

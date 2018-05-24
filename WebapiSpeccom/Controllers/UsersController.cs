@@ -18,9 +18,10 @@ namespace WebapiSpeccom.Controllers
 
         // GET: api/Users
         [HttpGet]
-        public IEnumerable<User> GetUser()
+        public ActionResult GetUser()
         {
-            return userContext.GetAllUsers();
+            var item = userContext.GetAllUsers();
+            return Ok(item);
         }
 
         // GET: api/Users/5
