@@ -20,10 +20,20 @@ namespace WebapiSpeccom.Controllers
 
         // GET: api/Computers
         [HttpGet]
-        public ActionResult GetComputer()
+        public IActionResult GetComputer()
         {
-            var item = icomputer.GetAllComputers();
-            return Ok(item);
+            var result = icomputer.GetAllComputers();
+
+            var jResult = JsonConvert.SerializeObject(result, 
+                Formatting.None,
+                new JsonSerializerSettings()
+                {
+                    ReferenceLoopHandling = ReferenceLoopHandling.Ignore
+                    
+        });
+            
+
+            return Ok(jResult);
         }
 
         // GET: api/Computers/5

@@ -16,8 +16,9 @@ namespace SpeccomInterface
 
         public IEnumerable<User> GetAllUsers()
         {
-            var item = _context.User;
-            return item;
+            var items = _context.User;
+           
+            return items;
         }
 
         public User GetUserByID(int id)
