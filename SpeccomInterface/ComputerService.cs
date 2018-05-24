@@ -139,7 +139,7 @@ namespace SpeccomInterface
                .Include(c => c.DiskDrive)
                .Include(c => c.Memory)
                .Include(c => c.GraphicCard)
-               .Include(u => u.ComputerUser).ThenInclude(uc => uc.User);
+               .Include(u => u.ComputerUser).ThenInclude(uc => uc.User).ToList();
             return items;
         }
     }
