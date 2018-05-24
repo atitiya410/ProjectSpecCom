@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 
 <html lang="en" xmlns="http://www.w3.org/1999/xhtml">
 
@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8" style="text-align: center">
-                        <h1>MycosShop</h1>
+                        <h1>Spec Computer</h1>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
@@ -45,18 +45,22 @@
             </div>
         </div>
     </div>
-	
+    
     <script>
         $(document).ready(function () {
 
 
-            console.log(urlApi + "/api/Computers");
+            console.log(urlApi + "api/Computers");
             // show product data
             $.ajax({
                 type: 'GET',
-                url: urlApi + "/api/Users",
+                url: urlApi + "api/Computers",
                 timeout: 5000,
                 success: function (res) {
+                    
+                    res = JSON.parse(res)
+                    console.log(JSON.stringify(res))
+                    console.log(res)
                     var columns = [];
                     var data = [];
                     Object.keys(res[0]).forEach(element => {
@@ -65,13 +69,23 @@
                         })
                     });
                     columns.push({
-                            title: "element"
+                            title: "button"
                         });
                     res.forEach(element => {
-                        data.push(Object.values(element));
+                        // console.log(Object.values(element))
+
+                        var curParse = Object.values(element);
+                        var useData = [];
+                        curParse.forEach(cur => {
+                            if (typeof cur == 'object')
+                                cur = JSON.stringify(cur);
+                            useData.push(cur);                          
+                        })
+                        data.push(useData);
                     });
 
-                    console.log(columns);
+
+                    
                     console.log(data);
                     var table = $('#productTable').DataTable({
                         "data": data,
@@ -84,8 +98,9 @@
                     });
                      $('#productTable tbody').on( 'click', 'button', function () {
                         var data = table.row( $(this).parents('tr') ).data();
-                         alert( data[0] +"'s salary is: "+ data[ 1 ] );
-                    } );
+                         alert( data[0] +"'Name is: "+ data[ 1 ]);
+                    } 
+                    );
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);

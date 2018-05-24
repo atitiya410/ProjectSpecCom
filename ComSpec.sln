@@ -15,7 +15,9 @@ Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeccomDB", "SpeccomDB\Spec
 EndProject
 Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "SpeccomInterface", "SpeccomInterface\SpeccomInterface.csproj", "{CD6E6248-FE7E-4ACE-9579-410E87662CAF}"
 EndProject
-Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "XUnitTestSpeccom", "XUnitTestSpeccom\XUnitTestSpeccom.csproj", "{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "XUnitTestSpeccom", "XUnitTestSpeccom\XUnitTestSpeccom.csproj", "{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B}"
+EndProject
+Project("{54435603-DBB4-11D2-8724-00A0C9A8B90C}") = "Speccomexe", "Speccomexe\Speccomexe.vdproj", "{883B5FE3-CD68-4588-A83D-87D4A44B8B59}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
@@ -43,6 +45,8 @@ Global
 		{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B}.Release|Any CPU.Build.0 = Release|Any CPU
+		{883B5FE3-CD68-4588-A83D-87D4A44B8B59}.Debug|Any CPU.ActiveCfg = Debug
+		{883B5FE3-CD68-4588-A83D-87D4A44B8B59}.Release|Any CPU.ActiveCfg = Release
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
@@ -53,6 +57,7 @@ Global
 		{649C8E28-07C9-4C3E-B01C-5567D8CC7F08} = {2F365349-1C1F-414B-B68B-D11549E1AA62}
 		{CD6E6248-FE7E-4ACE-9579-410E87662CAF} = {2F365349-1C1F-414B-B68B-D11549E1AA62}
 		{7CF67735-F8AA-4FAA-9DDA-CC8222C88D8B} = {2F365349-1C1F-414B-B68B-D11549E1AA62}
+		{883B5FE3-CD68-4588-A83D-87D4A44B8B59} = {B5E54F2E-5CB2-47AB-B5CB-F5865F1E99D0}
 	EndGlobalSection
 	GlobalSection(ExtensibilityGlobals) = postSolution
 		SolutionGuid = {1FDAF1B9-0959-4C8C-AE92-6FE504CF0DF9}

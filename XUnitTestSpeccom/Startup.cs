@@ -31,29 +31,29 @@ namespace XUnitTestSpeccom
         }
 
 
-        public void Configure(IApplicationBuilder app,
-            IHostingEnvironment env,
-            ILoggerFactory loggerFactory)
-        {
-            var repository = app.ApplicationServices.GetService<IUser>();
-            InitializeDatabaseAsync(repository);
+        //public void Configure(IApplicationBuilder app,
+        //    IHostingEnvironment env,
+        //    ILoggerFactory loggerFactory)
+        //{
+        //    var repository = app.ApplicationServices.GetService<IUser>();
+        //    InitializeDatabaseAsync(repository);
 
-            app.UseStaticFiles();
+        //    app.UseStaticFiles();
 
-            app.UseMvcWithDefaultRoute();
-        }
+        //    app.UseMvcWithDefaultRoute();
+        //}
 
         //IUser
-        public void InitializeDatabaseAsync(IUser repo)
-        {
-            var sessionList = repo.GetAllUsers();
-            if (!sessionList.Any())
-            {
-                repo.AddUser(gettestsession(1));
+        //public void InitializeDatabaseAsync(IUser repo)
+        //{
+        //    var sessionList = repo.GetAllUsers();
+        //    if (!sessionList.Any())
+        //    {
+        //        repo.AddUser(gettestsession(1));
 
                
-            }
-        }
+        //    }
+        //}
 
         public static User gettestsession(int id)
         {

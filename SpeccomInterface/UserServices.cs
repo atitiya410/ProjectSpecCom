@@ -14,9 +14,9 @@ namespace SpeccomInterface
             _context = context;
         }
 
-        public IEnumerable<User> GetAllUsers()
+        public object GetAllUsers()
         {
-            var items = _context.User;
+            var items = _context.User.Select(s => new { s.UserId ,s.UserName });
            
             return items;
         }
