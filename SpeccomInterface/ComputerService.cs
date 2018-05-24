@@ -106,8 +106,14 @@ namespace SpeccomInterface
         }
 
         public IEnumerable<Computer> GetAllComputers()
-        {
-            return _context.Computer;
+        {   
+            var item = _context.Computer
+                .Include(c => c.ComputerUser)
+                .ThenInclude(cu => cu.User)
+                .Include(k => k.DiskDrive)
+                .Include(l => l.Memory)
+                .Include(o => o.GraphicCard);
+            return item;
         }
 
         public Computer GetComputerByID(string id)
