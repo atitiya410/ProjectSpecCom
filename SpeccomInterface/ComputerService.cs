@@ -46,8 +46,13 @@ namespace SpeccomInterface
                         var userid = _context.User.SingleOrDefault(a => a.UserId == computer.UserId);
                         if (userid.UserId != comuser.UserId)
                         {
-                            _context.User.Remove(userid);
-                            _context.SaveChanges();
+                            var unew = _context.ComputerUser.SingleOrDefault(s => s.UserId == userid.UserId);
+                            if (unew == null)
+                            {
+                                _context.User.Remove(userid);
+                                _context.SaveChanges();
+                            }
+                           
                             var uid = _context.User.SingleOrDefault(a => a.UserId == comuser.UserId);
                             result = "Update User :" + uid.UserName;
 
