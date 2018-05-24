@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace ConsoleApp1.Models
+namespace SpeccomDB.Models
 {
     public partial class Computer
     {
@@ -11,14 +11,15 @@ namespace ConsoleApp1.Models
             DiskDrive = new HashSet<DiskDrive>();
             GraphicCard = new HashSet<GraphicCard>();
             Memory = new HashSet<Memory>();
+            UserId = default(int?); 
         }
 
-        public int Cpuid { get; set; }
+        public string ProcessorId { get; set; }
         public string Cpuname { get; set; }
         public int? Cores { get; set; }
         public int? Thread { get; set; }
-        public string ProcessorId { get; set; }
         public DateTime LastUpdate { get; set; }
+        public int? UserId { get; set; }
 
         public ICollection<ComputerUser> ComputerUser { get; set; }
         public ICollection<DiskDrive> DiskDrive { get; set; }

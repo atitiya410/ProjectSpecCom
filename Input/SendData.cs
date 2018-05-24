@@ -1,41 +1,51 @@
-﻿using ConsoleApp1.Models;
-using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System;
 using System.Net.Http;
 using System.Net.Http.Headers;
-using System.Text;
 using System.Threading.Tasks;
-using System.Management;
+using SpeccomDB.Models;
 
 namespace Input
 {
     class SendData
     {
-        public async Task CreateUser(User user)
-        {
+        string url = "http://localhost:57224/";
+        //"https://webapispeccom20180518043834.azurewebsites.net/";
+        public async Task<User> CreateUser(User user)
+        {            
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await client.PostAsJsonAsync("api/Users", user);
+            HttpResponseMessage response = await client.PostAsJsonAsync("api/Users", user);
+            if (response.IsSuccessStatusCode)
+            {
+                user = await response.Content.ReadAsAsync<User>();
+            }
+            return user;
         }
 
-        public async Task CreateComputer(Computer computer)
+        public async Task<string> CreateComputer(Computer computer)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
-   
-            var response =await client.PostAsJsonAsync("api/Computers", computer);
+
+            HttpResponseMessage response =await client.PostAsJsonAsync("api/Computers", computer);
+            string result = null;
+
+            if (response.IsSuccessStatusCode)
+            {
+                result = await response.Content.ReadAsAsync<string>();
+            }
+            return result;
         }
 
         public async Task CreateMemory(Memory memory)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -45,7 +55,7 @@ namespace Input
         public async Task CreateGraphicCard(GraphicCard graphic)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
@@ -55,21 +65,21 @@ namespace Input
         public async Task CreateHDD(DiskDrive diskDrive)
         {
             HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
+            client.BaseAddress = new Uri(url);
             client.DefaultRequestHeaders.Accept.Clear();
             client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
             var response = await client.PostAsJsonAsync("api/DiskDrives", diskDrive);
         }
 
-        public async Task CreateComUser(ComputerUser computerUser)
-        {
-            HttpClient client = new HttpClient();
-            client.BaseAddress = new Uri("https://webapispeccom20180517050018.azurewebsites.net/");
-            client.DefaultRequestHeaders.Accept.Clear();
-            client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
+        //public void CreateComUser(ComputerUser computerUser)
+        //{
+        //    HttpClient client = new HttpClient();
+        //    client.BaseAddress = new Uri(url);
+        //    client.DefaultRequestHeaders.Accept.Clear();
+        //    client.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("application/json"));
 
-            var response = await client.PostAsJsonAsync("api/ComputerUsers", computerUser);
-        }
+        //    var response =  client.PostAsJsonAsync("api/ComputerUsers", computerUser);
+        //}
     }
 }
