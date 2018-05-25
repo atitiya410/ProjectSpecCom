@@ -42,9 +42,7 @@
                 </div>
             </div>
             <div class="col-md-12">
-                <table class="table" id="productTable">
-                </table>
-
+               <p id="demo"></p>
 
             </div>
 
@@ -69,34 +67,11 @@
                     res = JSON.parse(res)
                     console.log(JSON.stringify(res))
                     console.log(res)
+                    console.log(res[0].ComputerUser.UserId)
+                    var io = JSON.stringify(res[0].ComputerUser.UserId)
 
-                    var columns = [];
-                    var data = [];
-                    Object.keys(res[0]).forEach(element => {
-                        columns.push({
-                            title: element
-                        })
-                    });
-                    res.forEach(element => {
-                        // console.log(Object.values(element))
+                    document.getElementById("demo").innerHTML = io;
 
-                        var curParse = Object.values(element);
-                        var useData = [];
-                        curParse.forEach(cur => {
-                            if (typeof cur == 'object')
-                                cur = JSON.stringify(cur);
-                            useData.push(cur);                          
-                        })
-                        data.push(useData);
-                    });
-
-
-                    
-                    console.log(data);
-                    var table = $('#productTable').DataTable({
-                        "data": data,
-                        "columns": columns
-                    });
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);

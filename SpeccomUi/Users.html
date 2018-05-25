@@ -23,6 +23,11 @@
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
+
+
+        <link href="//netdna.bootstrapcdn.com/bootstrap/3.1.0/css/bootstrap.min.css" rel="stylesheet" id="bootstrap-css">
+        <script src="//netdna.bootstrapcdn.com/bootstrap/3.1.0/js/bootstrap.min.js"></script>
+        <script src="//code.jquery.com/jquery-1.11.1.min.js"></script>
 </head>
 
 
@@ -38,8 +43,8 @@
                     <div class="col-md-2"></div>
                 </div>
             </div>
-            <div class="col-md-12">
-                <table class="table" id="productTable">
+            <div class="col-md-12"  >
+                <table class="table" id="productTable" >
                 </table>
 
             </div>
@@ -89,7 +94,7 @@
                      $('#productTable tbody').on( 'click', 'button', function () {
                         var data = table.row( $(this).parents('tr') ).data();
                          // alert( data[0] +"'Name is: "+ data[ 1 ]);
-                         window.location.href ='Computers.html?'+ data[0]
+                         window.location.href ='imo.html?'+ data[0]
                     } 
 
                     );
