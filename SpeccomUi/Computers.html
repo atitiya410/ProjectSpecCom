@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8" style="text-align: center">
-                        <h1>Spec Computer</h1>
+                        <h1>Spec Computers</h1>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
@@ -42,7 +42,10 @@
                 <table class="table" id="productTable">
                 </table>
 
+
             </div>
+
+            <a href="Users.html" type="button" class="btn btn-outline-dark">Back</a>
         </div>
     </div>
     
@@ -68,9 +71,6 @@
                             title: element
                         })
                     });
-                    columns.push({
-                            title: "button"
-                        });
                     res.forEach(element => {
                         // console.log(Object.values(element))
 
@@ -89,18 +89,9 @@
                     console.log(data);
                     var table = $('#productTable').DataTable({
                         "data": data,
-                        "columns": columns,
-                        "columnDefs": [ {
-                        "targets": -1,
-                        "data": null,
-                        "defaultContent": "<button>Click!</button>"
-                        } ]
+                        "columns": columns
                     });
-                     $('#productTable tbody').on( 'click', 'button', function () {
-                        var data = table.row( $(this).parents('tr') ).data();
-                         alert( data[0] +"'Name is: "+ data[ 1 ]);
-                    } 
-                    );
+                    
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);

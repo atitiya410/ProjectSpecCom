@@ -33,7 +33,7 @@
                 <div class="row">
                     <div class="col-md-2"></div>
                     <div class="col-md-8" style="text-align: center">
-                        <h1>Spec Computer</h1>
+                        <h1>Spec Users</h1>
                     </div>
                     <div class="col-md-2"></div>
                 </div>
@@ -75,6 +75,7 @@
 
                     console.log(columns);
                     console.log(data);
+
                     var table = $('#productTable').DataTable({
                         "data": data,
                         "columns": columns,
@@ -84,12 +85,17 @@
                         "defaultContent": "<button>Click!</button>"
                         } ]
                     });
+                   
                      $('#productTable tbody').on( 'click', 'button', function () {
                         var data = table.row( $(this).parents('tr') ).data();
                          // alert( data[0] +"'Name is: "+ data[ 1 ]);
-                         window.location.href ='Computers.html? + '
+                         
+                         window.location.href =("Computers.html+id=" + data)
+                       
                     } 
+
                     );
+
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);
