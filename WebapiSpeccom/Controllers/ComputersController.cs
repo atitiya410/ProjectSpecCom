@@ -30,7 +30,7 @@ namespace WebapiSpeccom.Controllers
                 {
                     ReferenceLoopHandling = ReferenceLoopHandling.Ignore
                     
-        });
+                });
             
 
             return Ok(jResult);

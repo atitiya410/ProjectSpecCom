@@ -28,7 +28,7 @@ namespace XUnitTestSpeccom
         public void TestGetUserById()
         {
             var mockRepo = new Mock<IUser>();
-            mockRepo.Setup(repo => repo.GetUserByID(1)).Returns(Startup.gettestsession(1));
+           // mockRepo.Setup(repo => repo.GetUserByID(1)).Returns(Startup.gettestsession(1));
             
             var controller = new UsersController(mockRepo.Object);
 

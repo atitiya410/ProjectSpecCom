@@ -1,5 +1,6 @@
 ﻿using System.Collections.Generic;
 using Microsoft.AspNetCore.Mvc;
+using Newtonsoft.Json;
 using SpeccomDB.Models;
 using SpeccomInterface;
 
@@ -34,13 +35,19 @@ namespace WebapiSpeccom.Controllers
             }
 
             var user = userContext.GetUserByID(id);
+            var jResult = JsonConvert.SerializeObject(user,
+               Formatting.None,
+               new JsonSerializerSettings()
+               {
+                   ReferenceLoopHandling = ReferenceLoopHandling.Ignore
 
+               });
             if (user == null)
             {
                 return NotFound();
             }
 
-            return Ok(user);
+            return Ok(jResult);
         }
 
         // PUT: api/Users/5
