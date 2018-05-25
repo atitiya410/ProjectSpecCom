@@ -51,13 +51,14 @@
     
     <script>
         $(document).ready(function () {
-
-
+           
             console.log(urlApi + "api/Computers");
             // show product data
+            var queryString = decodeURIComponent(window.location.search);
+            queryString = queryString.substring(1);
             $.ajax({
                 type: 'GET',
-                url: urlApi + "api/Computers",
+                url: urlApi + "api/Users/"+queryString,
                 timeout: 5000,
                 success: function (res) {
                     
@@ -91,7 +92,6 @@
                         "data": data,
                         "columns": columns
                     });
-                    
                 },
                 error: function (XHR, textStatus, errorThrown) {
                     console.log("error: " + textStatus);
