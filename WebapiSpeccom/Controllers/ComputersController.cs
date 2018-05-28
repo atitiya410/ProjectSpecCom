@@ -22,7 +22,7 @@ namespace WebapiSpeccom.Controllers
         [HttpGet]
         public IActionResult GetComputer()
         {
-            var result = icomputer.GetAllComputers();
+            var result = icomputer.GetComputersInfo();
 
             var jResult = JsonConvert.SerializeObject(result, 
                 Formatting.None,
