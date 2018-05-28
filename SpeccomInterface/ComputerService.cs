@@ -45,7 +45,10 @@ namespace SpeccomInterface
                         _context.SaveChanges();
                         var userid = _context.User.SingleOrDefault(a => a.UserId == computer.UserId);
                         if (userid.UserId != comuser.UserId)
-                        {
+                        {   
+                            var user = _context.User.SingleOrDefault(a => a.UserId == comuser.UserId);
+                            user.UserName = userid.UserName;
+                            _context.Entry(user).State = EntityState.Modified;
                             var unew = _context.ComputerUser.SingleOrDefault(s => s.UserId == userid.UserId);
                             if (unew == null)
                             {
@@ -53,8 +56,7 @@ namespace SpeccomInterface
                                 _context.SaveChanges();
                             }
                            
-                            var uid = _context.User.SingleOrDefault(a => a.UserId == comuser.UserId);
-                            result = "Update User :" + uid.UserName;
+                            result = "Update User :" + user.UserName;
 
                         }
                         else
@@ -117,18 +119,21 @@ namespace SpeccomInterface
                          join cu in _context.ComputerUser on c.ProcessorId equals cu.ProcessorId
                          join us in _context.User on cu.UserId equals us.UserId
                          join m in _context.Memory on c.ProcessorId equals m.ProcessorId
+                         join hdd in _context.DiskDrive on c.ProcessorId equals hdd.ProcessorId
                          select new ComInfo
                          {
-                             UserId = us.UserId,
-                             Cpuname = c.Cpuname,
-                             Capacity = c.Memory.Sum(s => s.Capacity)
+                             UserName = us.UserName,
+                             CPU = c.Cpuname,
+                             Ram = c.Memory.Sum(s => s.Capacity),
+                             HardDiskDrive = hdd.Size,
+                             LastUpdate = c.LastUpdate
                          });
 
             List<ComInfo> coms = new List<ComInfo>();
 
             foreach (var item in items)
             {
-                if (!isExist(coms, item.UserId))
+                if (!isExist(coms, item.UserName))
                 {
                     coms.Add(item);
                 }
@@ -137,11 +142,11 @@ namespace SpeccomInterface
             return coms;
         }
 
-        private bool isExist(List<ComInfo> coms, int userId)
+        private bool isExist(List<ComInfo> coms, string UserName)
         {
             foreach (var item in coms)
             {
-                if (item.UserId == userId)
+                if (item.UserName == UserName)
                 {
                     return true;
                 }

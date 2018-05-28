@@ -9,8 +9,7 @@ namespace Input
     class SendData
     {
         string url = "https://webapispeccom20180518043834.azurewebsites.net/";
-
-           // "http://localhost:57225/";
+            //"http://localhost:57225/";
 
         public async Task<User> CreateUser(User user)
         {            

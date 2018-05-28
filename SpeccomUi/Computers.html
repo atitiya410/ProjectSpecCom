@@ -19,7 +19,7 @@
     <script src="https://cdn.datatables.net/1.10.16/js/jquery.dataTables.min.js">
     </script>
 
-    <script src="main.js"></script>
+    <script src="js/main.js"></script>
 
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/4.7.0/css/font-awesome.min.css">
@@ -48,20 +48,27 @@
 
             </div>
 
-            <a href="Users.html" type="button" class="btn btn-outline-dark">Back</a>
+            <button type="button" id="logout" class="btn btn-outline-dark">Logout</button>
         </div>
     </div>
     
     <script>
         $(document).ready(function () {
-           
+            if (sessionStorage.getItem("accessToken") === null) {
+                window.location.href = "Login.html";
+            }
+
+            $('#logout').click(function () {
+                sessionStorage.removeItem('accessToken')
+                window.location.href = "index.html"
+            });
             console.log(urlApi + "api/Computers");
             // show product data
             var queryString = decodeURIComponent(window.location.search);
             queryString = queryString.substring(1);
             $.ajax({
                 type: 'GET',
-                url: urlApi + "api/Users/"+queryString,
+                url: urlApi + "api/Computers",
                 timeout: 5000,
                 success: function (res) {
                     

@@ -6,8 +6,11 @@ namespace SpeccomDB.Models
 {
     public class ComInfo
     {
-        public int UserId { get; set; }
-        public string Cpuname { get; set; }
-        public int Capacity { get; set; }
+        public string UserName { get; set; }
+        public string CPU { get; set; }
+        public int Ram { get; set; }
+        public int? HardDiskDrive { get; set; }
+        public DateTime LastUpdate { get; set; }
+
     }
 }
