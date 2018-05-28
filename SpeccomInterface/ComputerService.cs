@@ -121,10 +121,34 @@ namespace SpeccomInterface
                          {
                              UserId = us.UserId,
                              Cpuname = c.Cpuname,
-                             Capacity = m.Capacity
+                             Capacity = c.Memory.Sum(s => s.Capacity)
                          });
 
-            return items;
+            List<ComInfo> coms = new List<ComInfo>();
+
+            foreach (var item in items)
+            {
+                if (!isExist(coms, item.UserId))
+                {
+                    coms.Add(item);
+                }
+            }
+
+            return coms;
+        }
+
+        private bool isExist(List<ComInfo> coms, int userId)
+        {
+            foreach (var item in coms)
+            {
+                if (item.UserId == userId)
+                {
+                    return true;
+                }
+                    
+            }
+
+            return false;
         }
 
         public Computer GetComputerByID(string id)
