@@ -37,6 +37,40 @@ namespace SpeccomInterface
                 }
                 else
                 {
+                    //------------------------------------Remove Memory  -----------------------//
+                    var memoryall = _context.Memory.Where(s => s.ProcessorId == computer.ProcessorId);
+                    _context.Memory.RemoveRange(memoryall);
+                    _context.SaveChanges();
+                    //----------------------------------End Remove Memory -----------------------//
+                    //-------------------------------------Remove DiskDrive-----------------------//
+                    var diskdriveall = _context.DiskDrive.Where(s => s.ProcessorId == computer.ProcessorId);
+                    _context.DiskDrive.RemoveRange(diskdriveall);
+                    _context.SaveChanges();
+                    //----------------------------------End Remove DiskDrive -----------------------//
+                    //----------------------------------Remove GraphicCard -----------------------//
+
+                    var graphicCard = _context.GraphicCard.Where(s => s.ProcessorId == computer.ProcessorId);
+                    _context.GraphicCard.RemoveRange(graphicCard);
+                    _context.SaveChanges();
+                    //---------------------------------End Remove GraphicCard -----------------------//
+                    foreach (var memory in computer.Memory)
+                    {
+                        memory.ProcessorId = computer.ProcessorId;
+                        _context.Memory.Add(memory);
+                        _context.SaveChanges();
+                    }
+                    foreach (var diskdrive in computer.DiskDrive)
+                    {
+                        diskdrive.ProcessorId = computer.ProcessorId;
+                        _context.DiskDrive.Add(diskdrive);
+                        _context.SaveChanges();
+                    }
+                    foreach (var graphiccard in computer.GraphicCard)
+                    {
+                        graphiccard.ProcessorId = computer.ProcessorId;
+                        _context.GraphicCard.Add(graphiccard);
+                        _context.SaveChanges();
+                    }
                     var comuser = _context.ComputerUser.SingleOrDefault(s => s.ProcessorId == computer.ProcessorId);
                     if (comuser != null)
                     {
@@ -67,42 +101,7 @@ namespace SpeccomInterface
                     }
 
                 }
-                //------------------------------------Remove Memory  -----------------------//
-                    var memoryall = _context.Memory.Where(s => s.ProcessorId == computer.ProcessorId);
-                    _context.Memory.RemoveRange(memoryall);
-                    _context.SaveChanges();
-                //----------------------------------End Remove Memory -----------------------//
-                //-------------------------------------Remove DiskDrive-----------------------//
-                    var diskdriveall = _context.DiskDrive.Where(s => s.ProcessorId == computer.ProcessorId);
-                    _context.DiskDrive.RemoveRange(diskdriveall);
-                    _context.SaveChanges();              
-                //----------------------------------End Remove DiskDrive -----------------------//
-                //----------------------------------Remove GraphicCard -----------------------//
-
-                var graphicCard = _context.GraphicCard.Where(s => s.ProcessorId == computer.ProcessorId);
-                _context.GraphicCard.RemoveRange(graphicCard);
-                _context.SaveChanges();
-                //---------------------------------End Remove GraphicCard -----------------------//
-                foreach (var memory in computer.Memory)
-                {
-                    memory.ProcessorId = computer.ProcessorId;
-                    _context.Memory.Add(memory);
-                    _context.SaveChanges();
-                }
-                foreach (var diskdrive in computer.DiskDrive)
-                {
-                    diskdrive.ProcessorId = computer.ProcessorId;
-                    _context.DiskDrive.Add(diskdrive);
-                    _context.SaveChanges();
-                }
-                foreach (var graphiccard in computer.GraphicCard)
-                {
-                    graphiccard.ProcessorId = computer.ProcessorId;
-                    _context.GraphicCard.Add(graphiccard);
-                    _context.SaveChanges();
-                }
-
-
+                
                 return "Suscess " + result;
             }
             catch (Exception ex)

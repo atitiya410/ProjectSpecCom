@@ -8,7 +8,7 @@ using Microsoft.EntityFrameworkCore;
 using SpeccomDB.Models;
 
 namespace WebapiSpeccom.Controllers
-{
+{   
     [Produces("application/json")]
     [Route("api/Logins")]
     public class LoginsController : Controller
