@@ -30,6 +30,7 @@ namespace Input
         {
   
             button1.Enabled = true;
+           
         }
 
         private void textBox1_KeyDown(object sender, KeyEventArgs e)
@@ -42,9 +43,9 @@ namespace Input
 
         private async void button1_Click(object sender, EventArgs e)
         {
-            
 
 
+           
             if (String.IsNullOrEmpty(textBox1.Text) || string.IsNullOrWhiteSpace(textBox1.Text))
             {
                 MessageBox.Show("Please enter your name!!!");
@@ -52,8 +53,11 @@ namespace Input
             }
             else
             {
-            
-            User user = new User(); 
+
+                button1.Enabled = false;
+                textBox1.Enabled = false;
+
+                User user = new User(); 
             SendData sendData = new SendData();
             user.UserName = textBox1.Text;
             user = await sendData.CreateUser(user);
