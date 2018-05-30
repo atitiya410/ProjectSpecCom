@@ -6,7 +6,7 @@ namespace SpeccomDB.Models
     public partial class ComputerUser
     {
         public int UserId { get; set; }
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
 
         public Computer Processor { get; set; }
         public User User { get; set; }

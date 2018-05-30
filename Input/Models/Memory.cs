@@ -8,7 +8,7 @@ namespace SpeccomDB.Models
         public int MemoryId { get; set; }
         public int Capacity { get; set; }
         public string MemoryType { get; set; }
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
 
         public Computer Processor { get; set; }
     }

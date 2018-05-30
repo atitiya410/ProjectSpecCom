@@ -15,17 +15,17 @@ namespace SpeccomDB.Models
         public virtual DbSet<User> User { get; set; }
 
         public speccomContext(DbContextOptions<speccomContext> options)
-    : base(options)
+        : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             modelBuilder.Entity<Computer>(entity =>
             {
-                entity.HasKey(e => e.ProcessorId);
+                entity.HasKey(e => e.Uuid);
 
-                entity.Property(e => e.ProcessorId)
-                    .HasColumnName("ProcessorID")
+                entity.Property(e => e.Uuid)
+                    .HasColumnName("UUID")
                     .HasMaxLength(50)
                     .IsUnicode(false)
                     .ValueGeneratedNever();
@@ -42,26 +42,26 @@ namespace SpeccomDB.Models
 
             modelBuilder.Entity<ComputerUser>(entity =>
             {
-                entity.HasKey(e => new { e.UserId, e.ProcessorId });
+                entity.HasKey(e => new { e.UserId, e.Uuid });
 
                 entity.Property(e => e.UserId).HasColumnName("UserID");
 
-                entity.Property(e => e.ProcessorId)
-                    .HasColumnName("ProcessorID")
+                entity.Property(e => e.Uuid)
+                    .HasColumnName("UUID")
                     .HasMaxLength(50)
                     .IsUnicode(false);
-
-                entity.HasOne(d => d.Processor)
-                    .WithMany(p => p.ComputerUser)
-                    .HasForeignKey(d => d.ProcessorId)
-                    .OnDelete(DeleteBehavior.ClientSetNull)
-                    .HasConstraintName("FK_ComputerUser_Computer");
 
                 entity.HasOne(d => d.User)
                     .WithMany(p => p.ComputerUser)
                     .HasForeignKey(d => d.UserId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_ComputerUser_User");
+
+                entity.HasOne(d => d.Uu)
+                    .WithMany(p => p.ComputerUser)
+                    .HasForeignKey(d => d.Uuid)
+                    .OnDelete(DeleteBehavior.ClientSetNull)
+                    .HasConstraintName("FK_ComputerUser_Computer");
             });
 
             modelBuilder.Entity<DiskDrive>(entity =>
@@ -72,15 +72,15 @@ namespace SpeccomDB.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcessorId)
+                entity.Property(e => e.Uuid)
                     .IsRequired()
-                    .HasColumnName("ProcessorID")
+                    .HasColumnName("UUID")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Processor)
+                entity.HasOne(d => d.Uu)
                     .WithMany(p => p.DiskDrive)
-                    .HasForeignKey(d => d.ProcessorId)
+                    .HasForeignKey(d => d.Uuid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_DiskDrive_Computer");
             });
@@ -97,15 +97,15 @@ namespace SpeccomDB.Models
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcessorId)
+                entity.Property(e => e.Uuid)
                     .IsRequired()
-                    .HasColumnName("ProcessorID")
+                    .HasColumnName("UUID")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Processor)
+                entity.HasOne(d => d.Uu)
                     .WithMany(p => p.GraphicCard)
-                    .HasForeignKey(d => d.ProcessorId)
+                    .HasForeignKey(d => d.Uuid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Graphic Card_Computer");
             });
@@ -136,15 +136,15 @@ namespace SpeccomDB.Models
                     .HasMaxLength(20)
                     .IsUnicode(false);
 
-                entity.Property(e => e.ProcessorId)
+                entity.Property(e => e.Uuid)
                     .IsRequired()
-                    .HasColumnName("ProcessorID")
+                    .HasColumnName("UUID")
                     .HasMaxLength(50)
                     .IsUnicode(false);
 
-                entity.HasOne(d => d.Processor)
+                entity.HasOne(d => d.Uu)
                     .WithMany(p => p.Memory)
-                    .HasForeignKey(d => d.ProcessorId)
+                    .HasForeignKey(d => d.Uuid)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Memory_Computer");
             });

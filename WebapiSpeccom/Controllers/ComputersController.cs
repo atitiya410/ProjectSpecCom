@@ -65,7 +65,7 @@ namespace WebapiSpeccom.Controllers
                 return BadRequest(ModelState);
             }
 
-            if (id != computer.ProcessorId)
+            if (id != computer.Uuid)
             {
                 return BadRequest();
             }

@@ -24,12 +24,12 @@ namespace SpeccomInterface
             {
 
                 string result = "";
-                var computerid = _context.Computer.SingleOrDefault(a => a.ProcessorId == computer.ProcessorId);
+                var computerid = _context.Computer.SingleOrDefault(a => a.Uuid == computer.Uuid);
                 if (computerid == null)
                 {
                     _context.Computer.Add(computer);
                     ComputerUser computerUser = new ComputerUser();
-                    computerUser.ProcessorId = computer.ProcessorId;
+                    computerUser.Uuid = computer.Uuid;
                     computerUser.UserId = computer.UserId;
                     _context.ComputerUser.Add(computerUser);
                     _context.SaveChanges();
@@ -38,40 +38,40 @@ namespace SpeccomInterface
                 else
                 {
                     //------------------------------------Remove Memory  -----------------------//
-                    var memoryall = _context.Memory.Where(s => s.ProcessorId == computer.ProcessorId);
+                    var memoryall = _context.Memory.Where(s => s.Uuid == computer.Uuid);
                     _context.Memory.RemoveRange(memoryall);
                     _context.SaveChanges();
                     //----------------------------------End Remove Memory -----------------------//
                     //-------------------------------------Remove DiskDrive-----------------------//
-                    var diskdriveall = _context.DiskDrive.Where(s => s.ProcessorId == computer.ProcessorId);
+                    var diskdriveall = _context.DiskDrive.Where(s => s.Uuid == computer.Uuid);
                     _context.DiskDrive.RemoveRange(diskdriveall);
                     _context.SaveChanges();
                     //----------------------------------End Remove DiskDrive -----------------------//
                     //----------------------------------Remove GraphicCard -----------------------//
 
-                    var graphicCard = _context.GraphicCard.Where(s => s.ProcessorId == computer.ProcessorId);
+                    var graphicCard = _context.GraphicCard.Where(s => s.Uuid == computer.Uuid);
                     _context.GraphicCard.RemoveRange(graphicCard);
                     _context.SaveChanges();
                     //---------------------------------End Remove GraphicCard -----------------------//
                     foreach (var memory in computer.Memory)
                     {
-                        memory.ProcessorId = computer.ProcessorId;
+                        memory.Uuid = computer.Uuid;
                         _context.Memory.Add(memory);
                         _context.SaveChanges();
                     }
                     foreach (var diskdrive in computer.DiskDrive)
                     {
-                        diskdrive.ProcessorId = computer.ProcessorId;
+                        diskdrive.Uuid = computer.Uuid;
                         _context.DiskDrive.Add(diskdrive);
                         _context.SaveChanges();
                     }
                     foreach (var graphiccard in computer.GraphicCard)
                     {
-                        graphiccard.ProcessorId = computer.ProcessorId;
+                        graphiccard.Uuid = computer.Uuid;
                         _context.GraphicCard.Add(graphiccard);
                         _context.SaveChanges();
                     }
-                    var comuser = _context.ComputerUser.SingleOrDefault(s => s.ProcessorId == computer.ProcessorId);
+                    var comuser = _context.ComputerUser.SingleOrDefault(s => s.Uuid == computer.Uuid);
                     if (comuser != null)
                     {
                         computerid.LastUpdate = computer.LastUpdate;
@@ -115,10 +115,10 @@ namespace SpeccomInterface
         {
 
             var items = (from c in _context.Computer
-                         join cu in _context.ComputerUser on c.ProcessorId equals cu.ProcessorId
+                         join cu in _context.ComputerUser on c.Uuid equals cu.Uuid
                          join us in _context.User on cu.UserId equals us.UserId
-                         join m in _context.Memory on c.ProcessorId equals m.ProcessorId
-                         join hdd in _context.DiskDrive on c.ProcessorId equals hdd.ProcessorId
+                         join m in _context.Memory on c.Uuid equals m.Uuid
+                         join hdd in _context.DiskDrive on c.Uuid equals hdd.Uuid
                          select new ComInfo
                          {
                              UserName = us.UserName,
@@ -157,7 +157,7 @@ namespace SpeccomInterface
 
         public Computer GetComputerByID(string id)
         {
-            return _context.Computer.SingleOrDefault(m => m.ProcessorId == id);
+            return _context.Computer.SingleOrDefault(m => m.Uuid == id);
         }
 
         public void PutComputer(string id, Computer computer)

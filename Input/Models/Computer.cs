@@ -14,7 +14,7 @@ namespace SpeccomDB.Models
             UserId = default(int?); 
         }
 
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
         public string Cpuname { get; set; }
         public int? Cores { get; set; }
         public int? Thread { get; set; }

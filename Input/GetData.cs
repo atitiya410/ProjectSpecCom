@@ -26,7 +26,7 @@ namespace Input
                 computer.Cpuname = Convert.ToString(mj["Name"]);
                 computer.Cores = Convert.ToInt32(mj["NumberOfCores"]);
                 computer.Thread = Convert.ToInt32(mj["ThreadCount"]);
-                computer.ProcessorId = Convert.ToString(mj["Processorid"]);
+                //computer.ProcessorId = Convert.ToString(mj["Processorid"]);
                 await sendData.CreateComputer(computer);
                 getMemory();
                 getGraphicCard();
@@ -77,7 +77,7 @@ namespace Input
                 }
                 memory.Capacity = Convert.ToInt32(Convert.ToUInt64(mj["Capacity"]) / (1024 * 1024 * 1024));
                 memory.MemoryType = memoryt;
-                memory.ProcessorId = computer.ProcessorId;
+               // memory.ProcessorId = computer.ProcessorId;
                 await sendData.CreateMemory(memory);
             }
 
@@ -94,7 +94,7 @@ namespace Input
                 Console.WriteLine("Size Graphic Card : " + Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024) + " GB");
                 graphicCard.Caption = Convert.ToString(mj["Caption"]);
                 graphicCard.AdapterRam = Convert.ToInt32(Convert.ToUInt64(mj["AdapterRAM"]) / (1024 * 1024 * 1024));
-                graphicCard.ProcessorId = computer.ProcessorId;
+              //  graphicCard.ProcessorId = computer.ProcessorId;
                 await sendData.CreateGraphicCard(graphicCard);
             }
         }
@@ -111,7 +111,7 @@ namespace Input
                 //Console.WriteLine("Size DiskDrive : " + (((Convert.ToUInt64(mj["Size"]) / 1024) / 1024)/1024) + " GB");
                 diskDrive.Caption = Convert.ToString(mj["Caption"]);
                 diskDrive.Size = Convert.ToInt32(((Convert.ToUInt64(mj["Size"]) / 1024) / 1024) / 1024);
-                diskDrive.ProcessorId = computer.ProcessorId;
+              //  diskDrive.ProcessorId = computer.ProcessorId;
                 await sendData.CreateHDD(diskDrive);
             }
         }

@@ -19,16 +19,15 @@ namespace Input
             Computer computer = new Computer();
             foreach (ManagementObject mj in mos.Get())
             {
-
-                //Console.WriteLine("CPU Name : " + Convert.ToString(mj["Name"]));
-                //Console.WriteLine("Core : " + Convert.ToString(mj["NumberOfCores"]));
-                //Console.WriteLine("Thread : " + Convert.ToString(mj["ThreadCount"]));
-                //Console.WriteLine("Processorid : " + Convert.ToString(mj["Processorid"]));
                 computer.Cpuname = Convert.ToString(mj["Name"]);
                 computer.Cores = Convert.ToInt32(mj["NumberOfCores"]);
                 computer.Thread = Convert.ToInt32(mj["ThreadCount"]);
-                computer.ProcessorId = Convert.ToString(mj["Processorid"]);
                 computer.LastUpdate = now;
+            }
+            ManagementObjectSearcher csp = new ManagementObjectSearcher("SELECT * FROM Win32_ComputerSystemProduct");
+            foreach (ManagementObject mj in csp.Get())
+            {
+                computer.Uuid = Convert.ToString(mj["UUID"]);
             }
             return computer;
 

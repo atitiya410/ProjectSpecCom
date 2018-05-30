@@ -14,14 +14,13 @@ namespace SpeccomDB.Models
             Memory = new HashSet<Memory>();
         }
 
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
         public string Cpuname { get; set; }
         public int? Cores { get; set; }
         public int? Thread { get; set; }
         public DateTime LastUpdate { get; set; }
         [NotMapped]
         public int? UserId { get; set; }
-
         public ICollection<ComputerUser> ComputerUser { get; set; }
         public ICollection<DiskDrive> DiskDrive { get; set; }
         public ICollection<GraphicCard> GraphicCard { get; set; }

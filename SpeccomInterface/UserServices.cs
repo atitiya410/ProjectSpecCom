@@ -23,12 +23,7 @@ namespace SpeccomInterface
 
         public IQueryable<User> GetUserByID(int id)
         {
-            var items = _context.User
-                .Include(c => c.ComputerUser)
-                .ThenInclude(c => c.Processor.DiskDrive)
-                .ThenInclude(c => c.Processor.Memory)
-                .ThenInclude(u => u.Processor.GraphicCard)
-                .Where(w => w.UserId == id);
+            var items = _context.User;
             return items;
             //return _context.User.SingleOrDefault(m => m.UserId == id);
         }

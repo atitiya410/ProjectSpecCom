@@ -8,8 +8,8 @@ namespace SpeccomDB.Models
         public int DiskDriveId { get; set; }
         public int? Size { get; set; }
         public string Caption { get; set; }
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
 
-        public Computer Processor { get; set; }
+        public Computer Uu { get; set; }
     }
 }

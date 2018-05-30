@@ -8,7 +8,7 @@ namespace SpeccomDB.Models
         public int GraphicCardId { get; set; }
         public string Caption { get; set; }
         public int? AdapterRam { get; set; }
-        public string ProcessorId { get; set; }
+        public string Uuid { get; set; }
 
         public Computer Processor { get; set; }
     }
