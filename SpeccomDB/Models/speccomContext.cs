@@ -10,11 +10,12 @@ namespace SpeccomDB.Models
         public virtual DbSet<ComputerUser> ComputerUser { get; set; }
         public virtual DbSet<DiskDrive> DiskDrive { get; set; }
         public virtual DbSet<GraphicCard> GraphicCard { get; set; }
+        public virtual DbSet<Login> Login { get; set; }
         public virtual DbSet<Memory> Memory { get; set; }
         public virtual DbSet<User> User { get; set; }
 
         public speccomContext(DbContextOptions<speccomContext> options)
-        : base(options)
+    : base(options)
         { }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -107,6 +108,23 @@ namespace SpeccomDB.Models
                     .HasForeignKey(d => d.ProcessorId)
                     .OnDelete(DeleteBehavior.ClientSetNull)
                     .HasConstraintName("FK_Graphic Card_Computer");
+            });
+
+            modelBuilder.Entity<Login>(entity =>
+            {
+                entity.HasKey(e => e.UserId);
+
+                entity.Property(e => e.UserId).HasColumnName("UserID");
+
+                entity.Property(e => e.Password)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
+
+                entity.Property(e => e.Username)
+                    .IsRequired()
+                    .HasMaxLength(50)
+                    .IsUnicode(false);
             });
 
             modelBuilder.Entity<Memory>(entity =>

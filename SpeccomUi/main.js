@@ -1,1 +1,0 @@
-var urlApi = 'http://localhost:57225/';
